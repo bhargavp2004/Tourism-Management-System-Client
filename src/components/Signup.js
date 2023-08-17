@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap'
 
 export default function Signup() {
 
-  //created by Bhargav and Rahul
+  //created by B and Rahul
   return (
     <>
       <div className="container h-100">
