@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import tourismImage from '../images/Tourism-Jobs.jpg';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -136,8 +136,7 @@ export default function Signup() {
                     </div>
                     <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                        className="img-fluid" alt="" />
+                      <img src={tourismImage} className="img-fluid" alt="" />
 
                     </div>
                   </div>
