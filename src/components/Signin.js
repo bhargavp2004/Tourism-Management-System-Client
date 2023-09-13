@@ -32,13 +32,17 @@ export default function Signin() {
 
     const data = res.json();
 
-    if (res.status === 400) {
+    if (res.status === 401) {
       window.alert("Incorrect username or password");
       navigate('/signin');
     }
     else if(res.status === 200) {
       window.alert("Login Successful!");
-      navigate('/');
+      navigate('/Home');
+    }
+    else if(res.status === 201){
+      window.alert("Admin login Successful!");
+      navigate('/adminhome');
     }
   }
 
