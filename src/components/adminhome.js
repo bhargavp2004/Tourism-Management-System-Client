@@ -15,7 +15,6 @@ function App() {
             desc="Add Some Packages"
             add="/addpack"
             update="/updatepack"
-            
           />
         </div>
         <div className="col-md-4">

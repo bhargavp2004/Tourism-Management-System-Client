@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tourismImage from "../images/Tourism-Jobs.jpg";
 
-export default function Signup() {
+export default function AddPlace() {
   const navigate = useNavigate();
   const [place, setPlace] = useState({
     place_name: "",
@@ -11,14 +11,11 @@ export default function Signup() {
     image: null,
   });
 
-  let name, value;
-
   const handleInputs = (e) => {
-    name = e.target.name;
-    value = e.target.value;
+    const { name, value, files } = e.target;
 
     if (name === "image") {
-      setPlace({ ...place, [name]: e.target.files[0] });
+      setPlace({ ...place, [name]: files[0] });
     } else {
       setPlace({ ...place, [name]: value });
     }
@@ -26,34 +23,38 @@ export default function Signup() {
 
   const PostData = async (e) => {
     e.preventDefault();
-    console.log("Post Data called");
 
     const { place_name, place_desc, title, image } = place;
 
-    if (!place_name || !place_desc || !title || (image===null)) {
-      console.log("fill all the fields properly");
+    if (!place_name || !place_desc || !title || !image) {
       window.alert("Fill all the fields properly");
-      navigate("/addplace");
-    } else {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("place_name", place_name);
+    formData.append("place_desc", place_desc);
+    formData.append("title", title);
+    formData.append("image", image);
+
+    try {
       const res = await fetch("http://localhost:5000/addPlace", {
         method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          place_name,
-          place_desc,
-          title,
-          image,
-        }),
+        body: formData,
       });
 
-      await res.json();
-      if (res.status === 400) {
-        window.alert("Registration failed");
-        navigate("/addplace");
-      } else {
+      const data = await res.json();
+
+      if (res.status === 201) {
         window.alert("Registration Successful");
         navigate("/adminhome");
+      } else {
+        window.alert("Registration failed");
+        navigate("/addplace");
       }
+    } catch (error) {
+      console.error("Error:", error);
+      window.alert("An error occurred while processing your request.");
     }
   };
 
