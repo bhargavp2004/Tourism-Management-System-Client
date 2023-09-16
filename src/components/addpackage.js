@@ -5,7 +5,7 @@ import tourismImage from "../images/Tourism-Jobs.jpg";
 export default function Signup() {
   const [places, setPlaces] = useState([]);
 
- 
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +60,7 @@ export default function Signup() {
   const handleInputs = (e) => {
     name = e.target.name;
     value = e.target.value;
-  
+
     // Handle package_place separately as an array
     if (name === 'package_place') {
       // If the checkbox is checked, add the value to the array
@@ -106,7 +106,7 @@ export default function Signup() {
       !package_overview ||
       !package_days ||
       !package_price ||
-      (package_place.length ===0) ||
+      (package_place.length === 0) ||
       !package_guide
     ) {
       console.log("fill all the fields properly");
@@ -258,14 +258,14 @@ export default function Signup() {
                                 </div>
                               ))}
                             </div>
-                          <label className="form-label">Places</label>
+                            <label className="form-label">Places</label>
                           </div>
                         </div>
-                        
+
                         <div className="mb-4">
-  
-</div>
-                      
+
+                        </div>
+
 
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-lock fa-lg me-3 fa-fw"></i>

@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { GlobalContext } from '../App';
 
-export default function Signin() {
+
+export default function Signin(props) {
+
+  const { isLoggedIn, setisLoggedIn } = useContext(GlobalContext);
+
   let navigate = useNavigate();
   const [user, setUser] = useState({
     username : "", password : ""
   });
+  const [admin, setadmin] = useState(false);
 
   let name, value;
 
@@ -30,18 +36,24 @@ export default function Signin() {
     });
     console.log("status ", res.status);
 
-    const data = res.json();
+    const data = await res.json();
+    console.log("Directly printing token value");
+    console.log(data);
+
+    localStorage.setItem("token", data.token);
 
     if (res.status === 401) {
       window.alert("Incorrect username or password");
       navigate('/signin');
     }
     else if(res.status === 200) {
+      setisLoggedIn(true);
       window.alert("Login Successful!");
       navigate('/Home');
     }
     else if(res.status === 201){
       window.alert("Admin login Successful!");
+      setadmin(true);
       navigate('/adminhome');
     }
   }
