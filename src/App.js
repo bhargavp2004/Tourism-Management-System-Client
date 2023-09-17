@@ -1,5 +1,6 @@
-import './App.css';
-
+import React, { createContext, useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
 import Signup from './components/Signup';
@@ -11,7 +12,6 @@ import Addplace from './components/addplace';
 import Updateplace from './components/updateplace';
 import Updatepackage from './components/updatepackage';
 import Updateguide from './components/updateguide';
-import Updatepackdetails from './components/updatepackdetails';
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -22,8 +22,32 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const [isLoggedIn, setisLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // try {
+      //   const response = await fetch("http://localhost:5000/checkLogin");
+      //   if (response.status === 200) {
+      //     setisLoggedIn(true);
+      //   } else {
+      //     throw new Error('Failed to fetch data');
+      //   }
+      // } catch (error) {
+      //   console.error('Error:', error);
+      // }
+
+      const token = localStorage.getItem('token');
+      if(token)
+      {
+        setisLoggedIn(true);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <>
+    <GlobalContext.Provider value={{ isLoggedIn, setisLoggedIn }}>
       <Router>
        
           <Routes>
@@ -38,11 +62,10 @@ function App() {
             <Route exact path="/updatepack" element={<Updatepackage />}></Route>
             <Route exact path="/updateguide" element={<Updateguide />}></Route>
             <Route exact path="/updateplace" element={<Updateplace />}></Route>
-            <Route exact path="/updatepackdetails/:id" element={<Updatepackdetails />}></Route>
           </Routes>
         
       </Router>
-    </>
+    </GlobalContext.Provider>
   );
 }
 

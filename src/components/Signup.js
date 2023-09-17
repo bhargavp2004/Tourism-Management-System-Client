@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tourismImage from '../images/Tourism-Jobs.jpg';
+import { GlobalContext } from '../App';
 
 export default function Signup() {
+
+  const { isLoggedIn, setisLoggedIn } = useContext(GlobalContext);
+
   const navigate = useNavigate();
   const [user, setUser] = useState({
     firstname: "", lastname : "", email: "", username: "", password: "", repeatPassword : "", mobilenumber : ""
@@ -44,14 +48,22 @@ export default function Signup() {
     });
 
     const data = await res.json();
-    if(res.status === 500)
+    console.log(data);
+    localStorage.setItem("token", data.token);
+    if(res.status === 400)
     {
-      window.alert("Registration failed");
-      navigate('/signup');
+      window.alert("Try with different username and email");
+      navigate('/');
+    }
+    else if(res.status === 401)
+    {
+      window.alert("Found error");
     }
     else {
       window.alert("Registration Successful");
-      navigate('/signin');
+      
+      setisLoggedIn(true);
+      navigate('/Home');
     }
   }
 }
