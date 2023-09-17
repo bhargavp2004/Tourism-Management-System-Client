@@ -12,14 +12,11 @@ import Addplace from './components/addplace';
 import Updateplace from './components/updateplace';
 import Updatepackage from './components/updatepackage';
 import Updateguide from './components/updateguide';
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.css";
+import Booking from './components/Booking';
+import BookingPage from './components/BookingPage';
+import LogoutButton from './components/Logout';
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes
-} from "react-router-dom";
+export const GlobalContext = createContext();
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -49,24 +46,27 @@ function App() {
   return (
     <GlobalContext.Provider value={{ isLoggedIn, setisLoggedIn }}>
       <Router>
-       
-          <Routes>
-            <Route exact path="/Home" element={<Home />}></Route>
-            <Route exact path="/about" element={<About />}></Route>
-            <Route exact path="/" element={<Signup />}></Route>
-            <Route exact path="/signin" element={<Signin />}></Route>
-            <Route exact path="/adminhome" element={<Adminhome />}></Route>
-            <Route exact path="/addpack" element={<Addpack />}></Route>
-            <Route exact path="/addguide" element={<Addguide />}></Route>
-            <Route exact path="/addplace" element={<Addplace />}></Route>
-            <Route exact path="/updatepack" element={<Updatepackage />}></Route>
-            <Route exact path="/updateguide" element={<Updateguide />}></Route>
-            <Route exact path="/updateplace" element={<Updateplace />}></Route>
-          </Routes>
-        
+        <Navbar />
+        <Routes>
+          <Route exact path="/Home" element={<Home />}></Route>
+          <Route exact path="/about" element={<About />}></Route>
+          <Route exact path="/" element={<Signup />}></Route>
+          <Route exact path="/signin" element={<Signin />}></Route>
+          <Route exact path="/adminhome" element={<Adminhome />}></Route>
+          <Route exact path="/addpack" element={<Addpack />}></Route>
+          <Route exact path="/addguide" element={<Addguide />}></Route>
+          <Route exact path="/addplace" element={<Addplace />}></Route>
+          <Route exact path="/updatepack" element={<Updatepackage />}></Route>
+          <Route exact path="/updateguide" element={<Updateguide />}></Route>
+          <Route exact path="/updateplace" element={<Updateplace />}></Route>
+          <Route exact path="/bookPackage" element={<Booking></Booking>}></Route>
+          <Route exact path="/bookingPage" element={<BookingPage></BookingPage>}></Route>
+          <Route exact path="/bookingPage" element={<LogoutButton></LogoutButton>}></Route>
+        </Routes>
       </Router>
     </GlobalContext.Provider>
   );
 }
 
 export default App;
+
