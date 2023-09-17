@@ -15,7 +15,9 @@ import Updateguide from './components/updateguide';
 import Booking from './components/Booking';
 import BookingPage from './components/BookingPage';
 import LogoutButton from './components/Logout';
-
+import Updatepackdetails from './components/updatepackdetails';
+import Updateguidedetails from './components/updateguidedetails';
+import Updateplacedetails from './components/updateplacedetails';
 export const GlobalContext = createContext();
 
 function App() {
@@ -61,7 +63,10 @@ function App() {
           <Route exact path="/updateplace" element={<Updateplace />}></Route>
           <Route exact path="/bookPackage" element={<Booking></Booking>}></Route>
           <Route exact path="/bookingPage" element={<BookingPage></BookingPage>}></Route>
-          <Route exact path="/bookingPage" element={<LogoutButton></LogoutButton>}></Route>
+          {/* <Route exact path="/bookingPage" element={<LogoutButton></LogoutButton>}></Route> */}
+          <Route exact path="/updatepackdetails/:id" element={<Updatepackdetails />}></Route>
+          <Route exact path="/updateguidedetails/:id" element={<Updateguidedetails />}></Route>
+          <Route exact path="/updateplacedetails/:id" element={<Updateplacedetails />}></Route>
         </Routes>
       </Router>
     </GlobalContext.Provider>

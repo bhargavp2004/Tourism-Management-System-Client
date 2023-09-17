@@ -2,10 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
+const styles = {
+  selectContainer: {
+    marginBottom: "20px",
+  },
+  selectLabel: {
+    fontWeight: "bold",
+  },
+  selectDropdown: {
+    width: "100%",
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    backgroundColor: "#fff",
+    transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
+  },
+  // Add more styles here
+};
+
 export default function Updatepackdetails(props) {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  console.log("hello");
+  console.log(id);
   const [places, setPlaces] = useState([]);
   const [guides, setGuides] = useState([]);
 
@@ -73,12 +92,23 @@ export default function Updatepackdetails(props) {
     setPackage({ ...packages, [name]: value });
   };
 
-  const handlePlacesChange = (e) => {
-    const { name, options } = e.target;
-    const selectedPlaces = Array.from(options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
-    setPackage({ ...packages, [name]: selectedPlaces });
+  const handlePlaceCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      // If the checkbox is checked, add the place ID to the array
+      setPackage({
+        ...packages,
+        package_place: [...packages.package_place, value],
+      });
+    } else {
+      // If the checkbox is unchecked, remove the place ID from the array
+      setPackage({
+        ...packages,
+        package_place: packages.package_place.filter(
+          (placeId) => placeId !== value
+        ),
+      });
+    }
   };
 
   const handleGuidesChange = (e) => {
@@ -93,13 +123,16 @@ export default function Updatepackdetails(props) {
     e.preventDefault();
     console.log("hello");
     try {
-      const response = await fetch(`http://localhost:5000/updatePackage/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(packages),
-      });
+      const response = await fetch(
+        `http://localhost:5000/updatePackage/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(packages),
+        }
+      );
 
       if (response.ok) {
         // Package updated successfully
@@ -113,84 +146,138 @@ export default function Updatepackdetails(props) {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/deletePackage/${id}`, {
+        method: "POST",
+      });
+  
+      if (response.ok) {
+        // Package deleted successfully
+        // You can redirect to a success page or show a success message
+        console.log("yes dele");
+        navigate("/adminhome");
+      } else {
+        const responseData = await response.json();
+        // Display the error message from the server
+        alert(responseData.message);
+      }
+    } catch (error) {
+      console.error("Error deleting package:", error);
+      // Display a generic error message for network or server errors
+      alert("An error occurred while deleting the package.");
+    }
+  };
+
   return (
-    <div>
-      <h2>Update Package</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="package_name">Package Name:</label>
-          <input
-            type="text"
-            id="package_name"
-            name="package_name"
-            value={packages.package_name}
-            onChange={handleChange}
-          />
+    <div className="container mt-5">
+      <div className="card">
+        <div className="card-body">
+          <h2 className="card-title">Update Package</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="package_name" className="form-label">
+                Package Name:
+              </label>
+              <input
+                type="text"
+                id="package_name"
+                name="package_name"
+                value={packages.package_name}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="package_overview" className="form-label">
+                Package Overview:
+              </label>
+              <textarea
+                id="package_overview"
+                name="package_overview"
+                value={packages.package_overview}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="package_days" className="form-label">
+                Package Days:
+              </label>
+              <input
+                type="text"
+                id="package_days"
+                name="package_days"
+                value={packages.package_days}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="package_price" className="form-label">
+                Package Price:
+              </label>
+              <input
+                type="text"
+                id="package_price"
+                name="package_price"
+                value={packages.package_price}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Package Places:</label>
+              {places.map((place) => (
+                <div key={place._id} className="form-check">
+                  <input
+                    type="checkbox"
+                    id={`place_${place._id}`}
+                    name="package_place"
+                    value={place._id}
+                    checked={packages.package_place.includes(place._id)}
+                    onChange={handlePlaceCheckboxChange}
+                    className="form-check-input"
+                  />
+                  <label
+                    htmlFor={`place_${place._id}`}
+                    className="form-check-label"
+                  >
+                    {place.place_name}
+                  </label>
+                </div>
+              ))}
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="package_guide" className="form-label">
+                Package Guide:
+              </label>
+              <select
+                id="package_guide"
+                name="package_guide"
+                value={packages.package_guide}
+                onChange={handleGuidesChange}
+                className="form-select"
+              >
+                <option value="">Select a Guide</option>
+                {guides.map((guide) => (
+                  <option key={guide._id} value={guide._id}>
+                    {guide.username}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Update Package
+            </button>
+            <button type="button" className="btn btn-danger" onClick={handleDelete}>
+              Delete Package
+            </button>
+          </form>
         </div>
-        <div>
-          <label htmlFor="package_overview">Package Overview:</label>
-          <textarea
-            id="package_overview"
-            name="package_overview"
-            value={packages.package_overview}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="package_days">Package Days:</label>
-          <input
-            type="text"
-            id="package_days"
-            name="package_days"
-            value={packages.package_days}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="package_price">Package Price:</label>
-          <input
-            type="text"
-            id="package_price"
-            name="package_price"
-            value={packages.package_price}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="package_place">Package Places:</label>
-          <select
-            id="package_place"
-            name="package_place"
-            multiple
-            value={packages.package_place}
-            onChange={handlePlacesChange}
-          >
-            {places.map((place) => (
-              <option key={place._id} value={place._id}>
-                {place.place_name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="package_guide">Package Guides:</label>
-          <select
-            id="package_guide"
-            name="package_guide"
-            multiple
-            value={packages.package_guide}
-            onChange={handleGuidesChange}
-          >
-            {guides.map((guide) => (
-              <option key={guide._id} value={guide._id}>
-                {guide.guide_name}
-              </option>
-            ))}
-          </select>
-        </div>
-        {/* Add input fields for other package properties */}
-        <button type="submit">Update Package</button>
-      </form>
+      </div>
     </div>
   );
 }
