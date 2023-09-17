@@ -48,11 +48,13 @@ export default function Updatepackage() {
       <div>
         {packages.map((pack) => (
           <PackageCard
-            key={pack.id}
+            key={pack._id}
+            idd = {pack._id}
             package_name={pack.package_name}
             package_days={pack.package_days}
             package_price={pack.package_price}
-            package_guide={guideUsernames[pack.package_guide] || ""} // Use the guide username from state
+            package_guide={guideUsernames[pack.package_guide] || ""}
+            add="/updatepackdetails" // Use the guide username from state
           />
         ))}
       </div>
