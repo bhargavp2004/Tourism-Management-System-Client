@@ -5,7 +5,7 @@ import { GlobalContext } from '../App';
 
 export default function Signup() {
 
-  const { isLoggedIn, setisLoggedIn } = useContext(GlobalContext);
+  const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } = useContext(GlobalContext);
 
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -61,7 +61,6 @@ export default function Signup() {
     }
     else {
       window.alert("Registration Successful");
-      
       setisLoggedIn(true);
       navigate('/Home');
     }

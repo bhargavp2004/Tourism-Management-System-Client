@@ -22,31 +22,37 @@ export const GlobalContext = createContext();
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [isAdmin, setisAdmin] = useState(false);
+
+  const contextValues = {
+    isLoggedIn,
+    setisLoggedIn,
+    isAdmin,
+    setisAdmin,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      // try {
-      //   const response = await fetch("http://localhost:5000/checkLogin");
-      //   if (response.status === 200) {
-      //     setisLoggedIn(true);
-      //   } else {
-      //     throw new Error('Failed to fetch data');
-      //   }
-      // } catch (error) {
-      //   console.error('Error:', error);
-      // }
-
       const token = localStorage.getItem('token');
-      if(token)
+      if(token && localStorage.getItem('isAdmin')) 
       {
         setisLoggedIn(true);
+        setisAdmin(true);
+        console.log("setisLoggedIn", isLoggedIn);
+        console.log("isAdmin", isAdmin);
+      }
+      else if(token)
+      {
+        setisLoggedIn(true);
+        console.log("setisLoggedIn", isLoggedIn);
+        console.log("isAdmin", isAdmin);
       }
     };
     fetchData();
-  }, []);
+  }, [isLoggedIn, isAdmin]);
 
   return (
-    <GlobalContext.Provider value={{ isLoggedIn, setisLoggedIn }}>
+    <GlobalContext.Provider value={contextValues}>
       <Router>
         <Navbar />
         <Routes>

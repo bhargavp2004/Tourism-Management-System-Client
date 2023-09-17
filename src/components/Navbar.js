@@ -7,27 +7,7 @@ import { GlobalContext } from '../App';
 
 export default function Navbar(props) {
 
-  const { isLoggedIn, setisLoggedIn } = useContext(GlobalContext);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/about");
-        if (response.status === 200) {
-          const result = await response.json();
-          console.log(result);
-          setisLoggedIn(true);
-        } else {
-          throw new Error('Failed to fetch data');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } = useContext(GlobalContext);
 
   // Assuming props.isAdmin is set to true when the user is an admin
 
@@ -80,7 +60,7 @@ export default function Navbar(props) {
               
               {isLoggedIn && <LogoutButton loginfo={setisLoggedIn}/>}
               {/* Conditional rendering for admin */}
-              {props.isAdmin && (
+              {isAdmin && (
                 <>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/adminhome">

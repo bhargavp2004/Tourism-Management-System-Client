@@ -1,17 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../App';
 
 
 export default function Signin(props) {
 
-  const { isLoggedIn, setisLoggedIn } = useContext(GlobalContext);
+  const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } = useContext(GlobalContext);
 
   let navigate = useNavigate();
   const [user, setUser] = useState({
     username : "", password : ""
   });
-  const [admin, setadmin] = useState(false);
 
   let name, value;
 
@@ -53,7 +52,12 @@ export default function Signin(props) {
     }
     else if(res.status === 201){
       window.alert("Admin login Successful!");
-      setadmin(true);
+      console.log("Is Admin : ?", isAdmin);
+      setisAdmin(true);
+      localStorage.setItem('isAdmin', true);
+      setisLoggedIn(true);
+      console.log("After admin login Is Admin : ?", isAdmin);
+      console.log("is logged in : ? ", isLoggedIn);
       navigate('/adminhome');
     }
   }
