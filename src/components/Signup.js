@@ -51,22 +51,25 @@ export default function Signup() {
       !lastname
     ) {
       console.log("fill all the fields properly");
-      window.alert('Fill all the fields properly')
-      navigate('/');
-    }
-    else{
-      if(password !== repeatPassword)
-      {
-        window.alert('Password and Repeat password field must match');
-        navigate('/');
-      }
-    const res = await fetch("http://localhost:5000/register", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        firstname, lastname, email, username, password, mobilenumber 
-      })
-    });
+      window.alert("Fill all the fields properly");
+      navigate("/signup");
+    } else {
+      if (password !== repeatPassword) {
+        window.alert("Password and Repeat password field must match");
+        navigate("/");
+      } else {
+        const res = await fetch("http://localhost:5000/register", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            firstname,
+            lastname,
+            email,
+            username,
+            password,
+            mobilenumber,
+          }),
+        });
 
         const data = await res.json();
         console.log(data);
