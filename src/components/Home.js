@@ -3,7 +3,11 @@ import React from 'react'
 function Home() {
   return (
     <div>
-      <p>This is user home page</p>
+      {
+        localStorage.getItem('token') &&
+      
+        <p>This is user home page</p>
+      }
     </div>
   )
 }
