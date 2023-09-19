@@ -52,13 +52,13 @@ export default function Signup() {
     ) {
       console.log("fill all the fields properly");
       window.alert('Fill all the fields properly')
-      navigate('/signup');
+      navigate('/');
     }
     else{
       if(password !== repeatPassword)
       {
         window.alert('Password and Repeat password field must match');
-        navigate('/signup');
+        navigate('/');
       }
     const res = await fetch("http://localhost:5000/register", {
       method: "POST",
