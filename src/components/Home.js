@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PackageCard from "./packageCard";
-import "../styles/homeuser.css";
+
 function Home() {
   const navigate = useNavigate();
   const [packages, setPackages] = useState([]);
@@ -67,8 +67,8 @@ function Home() {
             package_days={pack.package_days}
             package_price={pack.package_price}
             package_guide={guideUsernames[pack.package_guide] || ""}
-            add="/bookPackage"
-            task="Book"
+            add="/bookingPage"
+            task="View"
           />
         ))}
       </div>

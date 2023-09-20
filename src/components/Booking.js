@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import "../styles/homeuser.css";
 function Booking() {
-  const [packages, setPackages] = useState({});
   const { id } = useParams();
+  const [packages, setPackages] = useState({});
 
   const [bookingData, setBookingData] = useState({
     book_date: "",
@@ -132,8 +132,8 @@ function Booking() {
                         {/* Select User */}
 
                         {/* Select Package */}
-
-                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        
+                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4" id="bookbtn">
                           <button
                             type="submit"
                             className="btn btn-primary btn-lg"
@@ -142,6 +142,7 @@ function Booking() {
                             }
                           ></button>
                         </div>
+                       
                       </form>
                     </div>
                     {/* Image */}
