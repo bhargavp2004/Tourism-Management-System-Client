@@ -37,7 +37,7 @@ const PackageCard = (props) => {
                 <Col className="text-right">
                   <div className="button-container">
                     <a href={`${props.add}/${props.idd}`} className="btn btn-primary custom-btn">
-                      Update
+                      {props.task}
                     </a>
                   </div>
                 </Col>

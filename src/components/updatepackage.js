@@ -55,6 +55,7 @@ export default function Updatepackage() {
             package_price={pack.package_price}
             package_guide={guideUsernames[pack.package_guide] || ""}
             add="/updatepackdetails" // Use the guide username from state
+            task="Update"
           />
         ))}
       </div>

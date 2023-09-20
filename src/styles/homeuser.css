@@ -1,0 +1,42 @@
+.card {
+    width: 80%; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the card horizontally */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+
+  input[type="text"]:focus {
+    border-color: #007bff; /* Change the border color when focused */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle box shadow */
+  }
+
+/* Hide the hover text by default */
+/* Default button style */
+.btn.btn-primary.btn-lg::before {
+    content: attr(data-content); /* Use the 'data-content' attribute as content */
+  }
+  
+  /* Change the button content on hover */
+  .btn.btn-primary.btn-lg:hover::before {
+    content: "Book"; /* Change the content to "Book" when hovered */
+  }
+  
+  /* Hide the 'data-content' attribute from view */
+  .btn.btn-primary.btn-lg::after {
+    content: none;
+  }
+  
+  
