@@ -67,8 +67,8 @@ function App() {
           <Route exact path="/updatepack" element={<Updatepackage />}></Route>
           <Route exact path="/updateguide" element={<Updateguide />}></Route>
           <Route exact path="/updateplace" element={<Updateplace />}></Route>
-          <Route exact path="/bookPackage" element={<Booking></Booking>}></Route>
-          <Route exact path="/bookingPage" element={<BookingPage></BookingPage>}></Route>
+          <Route exact path="/bookPackage/:id" element={<Booking></Booking>}></Route>
+          <Route exact path="/bookingPage/:id" element={<BookingPage></BookingPage>}></Route>
           {/* <Route exact path="/bookingPage" element={<LogoutButton></LogoutButton>}></Route> */}
           <Route exact path="/updatepackdetails/:id" element={<Updatepackdetails />}></Route>
           <Route exact path="/updateguidedetails/:id" element={<Updateguidedetails />}></Route>
