@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+//analyze
 function Booking() {
   const [packages, setPackages] = useState([]);
 
@@ -101,7 +101,6 @@ function Booking() {
                             required
                           />
                         </div>
-
                         <div className="mb-4">
                           <label htmlFor="book_cost" className="form-label">
                             Booking Cost
