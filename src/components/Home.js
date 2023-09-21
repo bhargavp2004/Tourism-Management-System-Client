@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PackageCard from "./packageCard";
-import '../styles/homeuser.css';
 
 function Home() {
   const navigate = useNavigate();
