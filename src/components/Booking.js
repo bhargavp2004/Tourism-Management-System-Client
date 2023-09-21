@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useParams } from "react-router-dom";
 function Booking() {
   const { id } = useParams();
   const [packages, setPackages] = useState({});
