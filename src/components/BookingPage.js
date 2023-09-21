@@ -56,6 +56,7 @@ export default function BookingPage() {
 
  useEffect(() => {
   const fetchDates = async () => {
+    console.log("inside fun");
     try {
       const response = await fetch(`http://localhost:5000/getDates/${id}`);
       if (response.ok) {
@@ -68,10 +69,15 @@ export default function BookingPage() {
       console.error("Error fetching dates:", error);
     }
   };
- })
+  fetchDates();
+ },[])
 
   function handleBook(){
     navigate(`/bookPackage/${id}`);
+  }
+
+  function handleDateSelection(){
+    console.log("Inside r");
   }
   
   return (
@@ -92,6 +98,24 @@ export default function BookingPage() {
             </li>
         ))}
       </ul>
+
+      <h2>Select Date</h2>
+      <form>
+        {dates.map((date) => (
+          <div key={date._id}>
+            <input
+              type="radio"
+              id={`date_${date._id}`}
+              name="selectedDate"
+              value={date.start_date} // You can use date.start_date as the value
+              onChange={() => handleDateSelection(date.start_date)}
+            />
+            <label htmlFor={`date_${date._id}`}>
+              {date.start_date} - {date.end_date}
+            </label>
+          </div>
+        ))}
+      </form>
 
       <button value="Book" className="btn btn-primary" onClick={handleBook}>Book</button>
       
