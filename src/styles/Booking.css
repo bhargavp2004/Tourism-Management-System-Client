@@ -1,0 +1,20 @@
+input[type="text"]:focus {
+    border-color: #007bff; /* Change the border color when focused */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle box shadow */
+  }
+
+/* Hide the hover text by default */
+/* Default button style */
+  #bookbtn .btn.btn-primary.btn-lg::before {
+    content: attr(data-content); /* Use the 'data-content' attribute as content */
+  }
+  
+  /* Change the button content on hover */
+  #bookbtn .btn.btn-primary.btn-lg:hover::before {
+    content: "Book"; /* Change the content to "Book" when hovered */
+  }
+  
+  /* Hide the 'data-content' attribute from view */
+  #bookbtn .btn.btn-primary.btn-lg::after {
+    content: none;
+  }

@@ -13,6 +13,11 @@ export default function BookingPage() {
     package_guide: "", 
   });
 
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,7 +86,7 @@ export default function BookingPage() {
   }
   
   return (
-    <div>
+    <div className="container-fluid">
       <h1>Package Details</h1>
       <p>Package Name: {packageData.package_name}</p>
       <p>Package Overview: {packageData.package_overview}</p>
@@ -101,21 +106,22 @@ export default function BookingPage() {
 
       <h2>Select Date</h2>
       <form>
-        {dates.map((date) => (
-          <div key={date._id}>
-            <input
-              type="radio"
-              id={`date_${date._id}`}
-              name="selectedDate"
-              value={date.start_date} // You can use date.start_date as the value
-              onChange={() => handleDateSelection(date.start_date)}
-            />
-            <label htmlFor={`date_${date._id}`}>
-              {date.start_date} - {date.end_date}
-            </label>
-          </div>
-        ))}
-      </form>
+      {dates.map((date) => (
+        <div key={date._id}>
+          <input
+            type="radio"
+            id={`date_${date._id}`}
+            name="selectedDate"
+            value={date.start_date}
+            onChange={() => handleDateSelection(date.start_date)}
+            style={{marginRight : 10 + 'px'}}
+          />
+          <label htmlFor={`date_${date._id}`}>
+            {formatDate(date.start_date)} - {formatDate(date.end_date)} Capacity for this package : {}
+          </label>
+        </div>
+      ))}
+    </form>
 
       <button value="Book" className="btn btn-primary" onClick={handleBook}>Book</button>
       
