@@ -51,8 +51,11 @@ export default function Signup() {
     package_overview: "",
     package_days: "",
     package_price: "",
+    package_capacity :  "",
     package_place: [],
     package_guide: "",
+    start_date: "",
+    end_date: ""
   });
 
   let name, value;
@@ -90,8 +93,11 @@ export default function Signup() {
       package_overview,
       package_days,
       package_price,
+      package_capacity,
       package_place,
       package_guide,
+      start_date,
+      end_date
     } = packages;
 
     console.log(package_name);
@@ -107,7 +113,9 @@ export default function Signup() {
       !package_days ||
       !package_price ||
       (package_place.length === 0) ||
-      !package_guide
+      !package_guide ||
+      !package_capacity ||
+      !start_date || !end_date
     ) {
       console.log("fill all the fields properly");
       window.alert("Fill all the fields properly");
@@ -121,8 +129,11 @@ export default function Signup() {
           package_overview,
           package_days,
           package_price,
+          package_capacity,
           package_place,
           package_guide,
+          start_date,
+          end_date
         }),
       });
 
@@ -233,6 +244,27 @@ export default function Signup() {
                         </div>
 
                         <div className="d-flex flex-row align-items-center mb-4">
+                          <i className="fas fa-key fa-lg me-3 fa-fw"></i>
+                          <div className="form-outline flex-fill mb-0">
+                            <input
+                              type="Number"
+                              id="package_capacity"
+                              className="form-control"
+                              name="package_capacity"
+                              value={packages.package_capacity}
+                              onChange={handleInputs}
+                            />
+                            <label
+                              className="form-label"
+                              htmlFor="package_capacity"
+                            >
+                              Capacity
+                            </label>
+                          </div>
+                        </div>
+
+
+                        <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div className="form-outline flex-fill mb-0">
                             <div className="border rounded p-3">
@@ -295,6 +327,44 @@ export default function Signup() {
                               ))}
                             </div>
                             <label className="form-label">Guides</label>
+                          </div>
+                        </div>
+
+                        <div className="mb-4">
+                          <div className="d-flex flex-row align-items-center mb-4">
+                            <i className="fas fa-calendar fa-lg me-3 fa-fw"></i>
+                            <div className="form-outline flex-fill mb-0">
+                              <input
+                                type="date"
+                                id="start_date"
+                                className="form-control"
+                                name="start_date"
+                                value={packages.start_date}
+                                onChange={handleInputs}
+                              />
+                              <label className="form-label" htmlFor="start_date">
+                                Start Date
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mb-4">
+                          <div className="d-flex flex-row align-items-center mb-4">
+                            <i className="fas fa-calendar fa-lg me-3 fa-fw"></i>
+                            <div className="form-outline flex-fill mb-0">
+                              <input
+                                type="date"
+                                id="end_date"
+                                className="form-control"
+                                name="end_date"
+                                value={packages.end_date}
+                                onChange={handleInputs}
+                              />
+                              <label className="form-label" htmlFor="end_date">
+                                End Date
+                              </label>
+                            </div>
                           </div>
                         </div>
 

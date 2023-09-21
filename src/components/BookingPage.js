@@ -33,11 +33,12 @@ export default function BookingPage() {
   }, []);
 
   const [placeData, getplaces] = useState([]);
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/getpalces/${id}`);
+        const response = await fetch(`http://localhost:5000/getplaces/${id}`);
         if (response.ok) {
           const data = await response.json();
           getplaces(data);
@@ -52,6 +53,22 @@ export default function BookingPage() {
     fetchData(); // Call the async function
 
   }, []);
+
+ useEffect(() => {
+  const fetchDates = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/getDates/${id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setDates(data);
+      } else {
+        console.error("Error fetching dates:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching dates:", error);
+    }
+  };
+ })
 
   function handleBook(){
     navigate(`/bookPackage/${id}`);
