@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import jwtDecode from 'jwt-decode'; // Create a styled component for the card
+
 const StyledCard = styled.div`
   width: 80%;
   max-width: 400px;
@@ -41,6 +42,8 @@ const StyledSubmitButton = styled.button`
 `;
 
 function TravellersDetails() {
+
+
   const navigate = useNavigate();
   const location = useLocation();
   const bookingData = location.state.bookingData;
@@ -66,9 +69,12 @@ function TravellersDetails() {
     }
   }, []);
 
+
   const [adultTravelers, setAdultTravelers] = useState([]);
   const [childTravelers, setChildTravelers] = useState([]);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+
+
 
   useEffect(() => {
     const generateInputs = () => {
@@ -102,6 +108,8 @@ function TravellersDetails() {
     generateInputs();
   }, [bookingData.book_adult, bookingData.book_child]);
 
+
+
   const handleAdultTravelerChange = (index, e) => {
     const updatedAdultTravelers = [...adultTravelers];
     updatedAdultTravelers[index][e.target.name] = e.target.value;
@@ -118,9 +126,60 @@ function TravellersDetails() {
     setAgreedToTerms(e.target.checked);
   };
 
+
+  const datepackid = bookingData.book_pack;
+  
+  const [packageData, setPackageData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`http://localhost:5000/getPackageById/${datepackid}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setPackageData(data);
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    }
+  
+    fetchData();
+  }, []);
+
+  async function updatepack(abc) {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/updatepackdate/${packageData._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(abc),
+        }
+      );
+
+      if (response.ok) {
+        return
+      } else {
+        console.error("Error updating Pack date:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error updating Pack date:", error);
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    var mem = parseInt(bookingData.book_adult,10);
+    mem = mem + parseInt(bookingData.book_child,10);
+    packageData.rem_book = (packageData.rem_book - mem);
+    console.log(packageData);
+    updatepack(packageData);
+    
     if (!agreedToTerms) {
       alert("Please agree to the terms before booking.");
       return;

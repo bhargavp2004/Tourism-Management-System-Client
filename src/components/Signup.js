@@ -6,7 +6,7 @@ import { GlobalContext } from "../App";
 export default function Signup() {
   const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } =
     useContext(GlobalContext);
-
+  
   const navigate = useNavigate();
   const [user, setUser] = useState({
     firstname: "",
@@ -90,6 +90,7 @@ export default function Signup() {
 
   return (
     <>
+      {isLoggedIn && navigate('/Home')}
       <section className="vh-100">
         <div className="container h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">

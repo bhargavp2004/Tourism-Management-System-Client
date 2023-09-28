@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
+
 export default function BookingPage() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -61,7 +63,6 @@ export default function BookingPage() {
 
  useEffect(() => {
   const fetchDates = async () => {
-    console.log("inside fun");
     try {
       const response = await fetch(`http://localhost:5000/getDates/${id}`);
       if (response.ok) {
@@ -78,7 +79,7 @@ export default function BookingPage() {
  },[])
 
 
- const [selectedDate, setSelectedDate] = useState(null);
+ const [selectedDate, setSelectedDate] = useState({});
 
 
  function handleBook() {
@@ -121,7 +122,7 @@ export default function BookingPage() {
             style={{marginRight : 10 + 'px'}}
           />
           <label htmlFor={`date_${date._id}`}>
-            {formatDate(date.start_date)} - {formatDate(date.end_date)} Capacity for this package : {}
+            {formatDate(date.start_date)} - {formatDate(date.end_date)} Booking Remaining : {date.rem_book}
           </label>
         </div>
       ))}
