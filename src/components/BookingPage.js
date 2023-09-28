@@ -77,12 +77,16 @@ export default function BookingPage() {
   fetchDates();
  },[])
 
-  function handleBook(){
-    navigate(`/bookPackage/${id}`);
-  }
 
-  function handleDateSelection(){
-    console.log("Inside r");
+ const [selectedDate, setSelectedDate] = useState(null);
+
+
+ function handleBook() {
+  navigate(`/bookPackage/${id}`, { state: { selectedDate } });
+}
+
+  function handleDateSelection(date) {
+    setSelectedDate(date);
   }
   
   return (
@@ -113,7 +117,7 @@ export default function BookingPage() {
             id={`date_${date._id}`}
             name="selectedDate"
             value={date.start_date}
-            onChange={() => handleDateSelection(date.start_date)}
+            onChange={() => handleDateSelection(date)}
             style={{marginRight : 10 + 'px'}}
           />
           <label htmlFor={`date_${date._id}`}>
