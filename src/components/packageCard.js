@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 
 const PackageCard = (props) => {
-  console.log(props.idd);
   return (
     <Container>
       <Row>

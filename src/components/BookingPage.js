@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
+
 export default function BookingPage() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -61,7 +63,6 @@ export default function BookingPage() {
 
  useEffect(() => {
   const fetchDates = async () => {
-    console.log("inside fun");
     try {
       const response = await fetch(`http://localhost:5000/getDates/${id}`);
       if (response.ok) {
@@ -77,12 +78,16 @@ export default function BookingPage() {
   fetchDates();
  },[])
 
-  function handleBook(){
-    navigate(`/bookPackage/${id}`);
-  }
 
-  function handleDateSelection(){
-    console.log("Inside r");
+ const [selectedDate, setSelectedDate] = useState({});
+
+
+ function handleBook() {
+  navigate(`/bookPackage/${id}`, { state: { selectedDate } });
+}
+
+  function handleDateSelection(date) {
+    setSelectedDate(date);
   }
   
   return (
@@ -113,11 +118,11 @@ export default function BookingPage() {
             id={`date_${date._id}`}
             name="selectedDate"
             value={date.start_date}
-            onChange={() => handleDateSelection(date.start_date)}
+            onChange={() => handleDateSelection(date)}
             style={{marginRight : 10 + 'px'}}
           />
           <label htmlFor={`date_${date._id}`}>
-            {formatDate(date.start_date)} - {formatDate(date.end_date)} Capacity for this package : {}
+            {formatDate(date.start_date)} - {formatDate(date.end_date)} Booking Remaining : {date.rem_book}
           </label>
         </div>
       ))}

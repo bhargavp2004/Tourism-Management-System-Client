@@ -56,7 +56,14 @@ export default function Navbar(props) {
                 Register
               </NavLink>
             </li>}
+
+            {!isAdmin && isLoggedIn &&
               
+              <li className="nav-item">
+              <NavLink className="nav-link" to="/profile">
+                Profile
+              </NavLink>
+            </li>}              
               
               {isLoggedIn && <LogoutButton loginfo={setisLoggedIn}/>}
               {/* Conditional rendering for admin */}

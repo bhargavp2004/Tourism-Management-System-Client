@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import '../styles/Booking.css';
+import { useLocation } from "react-router-dom";
+
 
 function Booking() {
-  const { id } = useParams();
   const [packages, setPackages] = useState({});
-  const [showDetailsForm, setShowDetailsForm] = useState(false);
-
+  const { id } = useParams();
+  const location = useLocation();
+  const selectedDate = location.state.selectedDate;
+  const navigate = useNavigate();
+  
   const [bookingData, setBookingData] = useState({
-    book_date: '',
+    book_date: "",
     book_adult: 0,
     book_child: 0,
     book_cost: 0,
-    book_user: '', // You'll need to select a user
-    book_pack: '', // You'll need to select a package
-    travelers: [], // Array to store traveler details
+    book_user: "", 
+    book_pack: "", 
+    book_travellers: [],
   });
 
   useEffect(() => {
@@ -25,10 +29,10 @@ function Booking() {
           const data = await response.json();
           setPackages(data);
         } else {
-          console.error('Error fetching packages:', response.statusText);
+          console.error("Error fetching packages:", response.statusText);
         }
       } catch (error) {
-        console.error('Error fetching packages:', error);
+        console.error("Error fetching packages:", error);
       }
     };
 
@@ -46,20 +50,21 @@ function Booking() {
   };
 
   const handleSubmit = (e) => {
+    console.log(selectedDate);
     e.preventDefault();
 
     const currentDate = new Date();
     const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDate.getDate()).padStart(2, "0");
     const formattedDate = `${year}-${month}-${day}`;
 
-    setBookingData({
-      ...bookingData,
-      book_date: formattedDate,
-    });
+    bookingData.book_date = formattedDate;
+    bookingData.book_pack = selectedDate._id;
     // Handle form submission, you can send bookingData to the server or perform other actions
     console.log(bookingData);
+
+    navigate("/traveler", { state: { bookingData } });
   };
 
   function pricegenerator() {
@@ -69,60 +74,13 @@ function Booking() {
     bookingData.book_cost = cost;
   }
 
-  // Function to generate an array of travelers based on the count and type (adult or child)
-  function generateTravelers(count, type) {
-    const travelers = [];
-    for (let i = 1; i <= count; i++) {
-      travelers.push({
-        name: '',
-        age: '',
-        type, // 'adult' or 'child'
-        gender: 'male', // Default gender is 'male'
-      });
-    }
-    return travelers;
-  }
-
-  const handleTravelerInputs = (type, index, e) => {
-    const { name, value } = e.target;
-
-    // Create a copy of the appropriate traveler array (adult or child)
-    const updatedTravelers =
-      type === 'adult'
-        ? [...bookingData.travelers.slice(0, bookingData.book_adult)]
-        : [...bookingData.travelers.slice(0, bookingData.book_child)];
-
-    // Update the traveler's name, age, or gender based on the input field
-    updatedTravelers[index] = {
-      ...updatedTravelers[index],
-      [name]: value,
-    };
-
-    // Update the state based on the type (adult or child)
-    setBookingData({
-      ...bookingData,
-      travelers: type === 'adult' ? updatedTravelers : [...bookingData.travelers.slice(0, bookingData.book_adult), ...updatedTravelers],
-    });
-  };
-
-  // Function to handle final submission
-  const handleFinalSubmit = (e) => {
-    e.preventDefault();
-
-    // Handle the final form submission, you can send bookingData to the server or perform other actions
-    console.log(bookingData);
-  };
-
-  const adultTravelers = generateTravelers(bookingData.book_adult, 'adult');
-  const childTravelers = generateTravelers(bookingData.book_child, 'child');
-
   return (
     <>
       <section className="vh-100">
         <div className="container h-100">
           <div className="row align-items-center justify-content-center">
             {/* Initial Booking Form (Centered) */}
-            
+            {!showDetailsForm && (
               <div className="col-md-6">
                 <div className="card text-black">
                   <div className="card-body p-md-5">
@@ -145,42 +103,57 @@ function Booking() {
                         />
                       </div>
 
-                      <div className="mb-4">
-                        <label htmlFor="book_child" className="form-label">
-                          Children
-                        </label>
-                        <input
-                          type="number"
-                          id="book_child"
-                          className="form-control"
-                          name="book_child"
-                          value={bookingData.book_child}
-                          onChange={handleInputs}
-                          required
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <label htmlFor="book_cost" className="form-label">
-                          Booking Cost
-                        </label>
-                        <input
-                          type="number"
-                          id="book_cost"
-                          disabled
-                          className="form-control"
-                          name="book_cost"
-                          value={bookingData.book_cost ? bookingData.book_cost : 0}
-                          onChange={handleInputs}
-                          required
-                        />
-                      </div>
+                        <div className="mb-4">
+                          <label htmlFor="book_child" className="form-label">
+                            Children
+                          </label>
+                          <input
+                            type="number"
+                            id="book_child"
+                            className="form-control"
+                            name="book_child"
+                            value={bookingData.book_child}
+                            onChange={handleInputs}
+                            required
+                          />
+                        </div>
 
-                     
+                        <div className="mb-4">
+                          <label htmlFor="book_cost" className="form-label">
+                            Booking Cost
+                          </label>
+                          <input
+                            type="number"
+                            id="book_cost"
+                            disabled
+                            className="form-control"
+                            name="book_cost"
+                            value={
+                              bookingData.book_cost ? bookingData.book_cost : 0
+                            }
+                            onChange={handleInputs}
+                            required
+                          />
+                        </div>
+
+                      {/* Select User */}
+                      {/* Select Package */}
+                      <div className="text-center">
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-lg"
+                          onClick={() => setShowDetailsForm(true)}
+                        >
+                          Next
+                        </button>
+                      </div>
                     </form>
                   </div>
                 </div>
-              </div>   
+              </div>
+            )}
 
+            {/* Traveler Details Form */}
             {showDetailsForm && (
               <div className="col-md-6">
                 <div className="card text-black">
@@ -196,7 +169,7 @@ function Booking() {
                             type="text"
                             id={`adult_name_${index}`}
                             className="form-control"
-                            // name={`adult_name_${index}`}
+                            name={`adult_name_${index}`}
                             value={traveler.name}
                             onChange={(e) => handleTravelerInputs('adult', index, e)}
                             required
@@ -324,7 +297,7 @@ function Booking() {
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </section>
