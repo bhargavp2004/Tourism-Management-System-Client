@@ -40,6 +40,7 @@ export default function Signin(props) {
     console.log(data);
 
     localStorage.setItem("token", data.token);
+    localStorage.setItem("username", username);
 
     if (res.status === 401) {
       window.alert("Incorrect username or password");

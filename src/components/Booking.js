@@ -122,7 +122,7 @@ function Booking() {
         <div className="container h-100">
           <div className="row align-items-center justify-content-center">
             {/* Initial Booking Form (Centered) */}
-            {!showDetailsForm && (
+            
               <div className="col-md-6">
                 <div className="card text-black">
                   <div className="card-body p-md-5">
@@ -175,24 +175,12 @@ function Booking() {
                         />
                       </div>
 
-                      {/* Select User */}
-                      {/* Select Package */}
-                      <div className="text-center">
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-lg"
-                          onClick={() => setShowDetailsForm(true)}
-                        >
-                          Next
-                        </button>
-                      </div>
+                     
                     </form>
                   </div>
                 </div>
-              </div>
-            )}
+              </div>   
 
-            {/* Traveler Details Form */}
             {showDetailsForm && (
               <div className="col-md-6">
                 <div className="card text-black">
@@ -208,7 +196,7 @@ function Booking() {
                             type="text"
                             id={`adult_name_${index}`}
                             className="form-control"
-                            name={`adult_name_${index}`}
+                            // name={`adult_name_${index}`}
                             value={traveler.name}
                             onChange={(e) => handleTravelerInputs('adult', index, e)}
                             required

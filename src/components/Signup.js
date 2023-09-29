@@ -74,6 +74,7 @@ export default function Signup() {
         const data = await res.json();
         console.log(data);
         localStorage.setItem("token", data.token);
+        localStorage.setItem("username", username);
         if (res.status === 400) {
           window.alert("Try with different username and email");
           navigate("/");
