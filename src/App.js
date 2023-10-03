@@ -81,6 +81,7 @@ function App() {
         </Routes>
       </Router>
     </GlobalContext.Provider>
+ 
   );
 }
 

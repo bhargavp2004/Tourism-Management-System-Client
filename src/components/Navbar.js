@@ -4,16 +4,15 @@ import 'bootstrap/dist/js/bootstrap';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from './Logout';
 import { GlobalContext } from '../App';
+import "../styles/Navbar.css";
 
 export default function Navbar(props) {
 
   const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } = useContext(GlobalContext);
 
-  // Assuming props.isAdmin is set to true when the user is an admin
-
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-blue">
         <div className="container-fluid">
           <button
             className="navbar-toggler"
@@ -29,7 +28,7 @@ export default function Navbar(props) {
           <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <NavLink className="nav-link active" aria-current="page" to="/Home">
+                <NavLink className="nav-link" aria-current="page" to="/Home">
                   Home
                 </NavLink>
               </li>
@@ -65,7 +64,7 @@ export default function Navbar(props) {
               </NavLink>
             </li>}              
               
-              {isLoggedIn && <LogoutButton loginfo={setisLoggedIn}/>}
+             
               {/* Conditional rendering for admin */}
               {isAdmin && (
                 <>
@@ -107,6 +106,8 @@ export default function Navbar(props) {
                   
                 </>
               )}
+
+{isLoggedIn && <LogoutButton loginfo={setisLoggedIn}/>}
               {/* End of Conditional rendering for admin */}
             </ul>
           </div>

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PackageCard from "./packageCard";
+import tourismImage from '../images/pic3.jpg';
+import '../styles/Home.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function Home() {
   const navigate = useNavigate();
@@ -45,34 +49,39 @@ function Home() {
   }
 
   const filteredPackages = packages.filter((pack) =>
-  pack.package_name.toLowerCase().includes(searchQuery.toLowerCase())
-);
+    pack.package_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <div>
-      <div className="centered-card">
+    <div className="centered-card">
       <div className="card">
-        <input
-          type="text"
-          placeholder="Search packages..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-
-        {filteredPackages.map((pack) => (
-          <PackageCard
-            key={pack._id}
-            idd={pack._id}
-            package_name={pack.package_name}
-            package_days={pack.package_days}
-            package_price={pack.package_price}
-            package_guide={guideUsernames[pack.package_guide] || ""}
-            add="/bookingPage"
-            task="View"
+      <div className="search-container">
+      <span className="icon bi bi-search"></span>
+          <input
+            type="text"
+            placeholder="Search packages..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-field"
           />
-        ))}
+       </div>
+
+        <div className="row row-cols-1 row-cols-md-4 g-4" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
+          {filteredPackages.map((pack) => (
+            <div className="col" key={pack._id}>
+              <PackageCard
+                idd={pack._id}
+                package_name={pack.package_name}
+                package_days={pack.package_days}
+                package_price={pack.package_price}
+                package_guide={guideUsernames[pack.package_guide] || ""}
+                add="/bookingPage"
+                task="View"
+              />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     </div>
   );
 }

@@ -1,0 +1,18 @@
+.search-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    color: #333; /* Dark text color for better visibility */
+    margin-bottom: 20px;
+  }
+
+  .row{
+    height : fit-content;
+  }
+
+  .col-3{
+    height : fit-content;
+  }

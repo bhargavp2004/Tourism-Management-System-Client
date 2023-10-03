@@ -1,3 +1,8 @@
+
+*{
+  font-family : montserrat;
+}
+
 .App {
   text-align: center;
 }
@@ -46,6 +51,38 @@
   display: inline-block;
 }
 
+.package-card {
+  margin: 20px;
+}
 
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  border-radius: 10px;
+  width: 300px; /* Set a fixed width for each card */
+  margin-right: 20px; /* Add margin between cards */
+}
 
+.card:last-child {
+  margin-right: 0; /* Remove margin for the last card in the row */
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.custom-btn {
+  background-color: #007bff;
+  border: none;
+  margin-top: 10px;
+}
+
+.custom-btn:hover {
+  background-color: #0056b3;
+}
 

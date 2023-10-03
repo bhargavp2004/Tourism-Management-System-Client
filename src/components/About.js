@@ -1,21 +1,31 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useContext, useEffect, useState } from 'react';
+import { GlobalContext } from '../App';
 function About() {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } = useContext(GlobalContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/about");
-        if (response.status === 200) {
-          const result = await response.json();
-          console.log(result);
-          setisLoggedIn(true);
-        } else {
-          throw new Error('Failed to fetch data');
-        }
-      } catch (error) {
-        console.error('Error:', error);
+      const token = localStorage.getItem('token');
+      console.log("From about"+  token);
+
+      const response = await fetch('http://localhost:5000/about', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Include the token in the Authorization header as a Bearer token
+          'Authorization': `Bearer ${token}`
+        },
+        // If you need to send additional data in the request body, include it here
+        body: JSON.stringify({
+          token
+        })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        // Process the data received from the backend
+        console.log(data);
+      } else {
+        console.error('Error:', response.statusText);
       }
     };
 
@@ -78,6 +88,9 @@ function About() {
           </div>
         </div>
       </section>
+      }
+      {!isLoggedIn && 
+        <h2> Login In Order To See These Details</h2>
       }
     </>
   )
