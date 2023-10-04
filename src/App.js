@@ -14,12 +14,13 @@ import Updatepackage from './components/updatepackage';
 import Updateguide from './components/updateguide';
 import Booking from './components/Booking';
 import BookingPage from './components/BookingPage';
-import LogoutButton from './components/Logout';
 import Updatepackdetails from './components/updatepackdetails';
 import Updateguidedetails from './components/updateguidedetails';
 import Updateplacedetails from './components/updateplacedetails';
 import Travelers from './components/travellersdetails';
 import UserProfile from './components/UserProfile';
+import AddDate from './components/AddDate'; 
+import UpdateDate from './components/UpdateDate';
 export const GlobalContext = createContext();
 
 function App() {
@@ -69,6 +70,8 @@ function App() {
           <Route exact path="/updatepack" element={<Updatepackage />}></Route>
           <Route exact path="/updateguide" element={<Updateguide />}></Route>
           <Route exact path="/updateplace" element={<Updateplace />}></Route>
+          <Route exact path="/adddate" element={<AddDate />}></Route>
+          <Route exact path="/updatedate" element={<UpdateDate />}></Route>
           <Route exact path="/bookPackage/:id" element={<Booking></Booking>}></Route>
           <Route exact path="/bookingPage/:id" element={<BookingPage></BookingPage>}></Route>
           {/* <Route exact path="/nextBooking" element={<NextBooking></NextBooking>}></Route> */}
