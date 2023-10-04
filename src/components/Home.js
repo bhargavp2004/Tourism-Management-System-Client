@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PackageCard from "./packageCard";
 import tourismImage from '../images/pic3.jpg';
+
 import '../styles/Home.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -81,6 +82,8 @@ function Home() {
             </div>
           ))}
         </div>
+        
+        
       </div>
     </div>
   );
