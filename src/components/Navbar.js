@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap';
-import { NavLink } from 'react-router-dom';
-import LogoutButton from './Logout';
-import { GlobalContext } from '../App';
+import React, { useContext, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap";
+import { NavLink } from "react-router-dom";
+import LogoutButton from "./Logout";
+import { GlobalContext } from "../App";
 import "../styles/Navbar.css";
 
 export default function Navbar(props) {
-
-  const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } = useContext(GlobalContext);
+  const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } =
+    useContext(GlobalContext);
 
   return (
     <div>
@@ -25,7 +25,10 @@ export default function Navbar(props) {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+          <div
+            className="collapse navbar-collapse justify-content-center"
+            id="navbarSupportedContent"
+          >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <NavLink className="nav-link" aria-current="page" to="/Home">
@@ -42,29 +45,30 @@ export default function Navbar(props) {
                   Contact
                 </NavLink>
               </li>
-              {!isLoggedIn && 
-              <li className="nav-item">
-              <NavLink className="nav-link" to="/signin">
-                Login
-              </NavLink>
-            </li>}
+              {!isLoggedIn && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/signin">
+                    Login
+                  </NavLink>
+                </li>
+              )}
 
-            {!isLoggedIn && 
-              <li className="nav-item">
-              <NavLink className="nav-link" to="/">
-                Register
-              </NavLink>
-            </li>}
+              {!isLoggedIn && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/">
+                    Register
+                  </NavLink>
+                </li>
+              )}
 
-            {!isAdmin && isLoggedIn &&
-              
-              <li className="nav-item">
-              <NavLink className="nav-link" to="/profile">
-                Profile
-              </NavLink>
-            </li>}              
-              
-             
+              {!isAdmin && isLoggedIn && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/profile">
+                    Profile
+                  </NavLink>
+                </li>
+              )}
+
               {/* Conditional rendering for admin */}
               {isAdmin && (
                 <>
@@ -103,11 +107,10 @@ export default function Navbar(props) {
                       Update Place
                     </NavLink>
                   </li>
-                  
                 </>
               )}
 
-{isLoggedIn && <LogoutButton loginfo={setisLoggedIn}/>}
+              {isLoggedIn && <LogoutButton loginfo={setisLoggedIn} />}
               {/* End of Conditional rendering for admin */}
             </ul>
           </div>
