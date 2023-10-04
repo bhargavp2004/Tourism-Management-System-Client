@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import jwtDecode from 'jwt-decode'; // Create a styled component for the card
+import jwtDecode from 'jwt-decode'; 
+import tourImage from '../images/pic2.jpg';
+import env from "react-dotenv";
+// const Razorpay = require('razorpay');
+// var instance = new Razorpay({ key_id: process.env.API_KEY, key_secret: process.env.API_SECRET_KEY });
 
 const StyledCard = styled.div`
   width: 80%;
@@ -49,21 +53,22 @@ function TravellersDetails() {
   const bookingData = location.state.bookingData;
   const [userid, setUserid] = useState('');
 
+  const cost = bookingData.bookingCost;
+
   useEffect(() => {
-    // Retrieve the token from local storage
+
+    console.log(process.env.REACT_APP_API_KEY);
+    console.log(process.env.REACT_APP_API_SECRET_KEY);
+    
     const token = localStorage.getItem('token');
-    // Check if a token exists
+    console.log(token);
     if (token) {
       try {
-        // Decode the token to get the payload
         const decodedToken = jwtDecode(token);
-        // Extract the username from the payload (adjust this based on your token structure)
-        const { id } = decodedToken.user;
-        // Set the username in the component's state
-        setUserid(id);
-        bookingData.book_user = id;
+        console.log("Token : ", decodedToken);
+        setUserid(decodedToken.user.id);
+        bookingData.book_user = decodedToken.user.id;
       } catch (error) {
-        // Handle any decoding errors
         console.error('Error decoding token:', error);
       }
     }
@@ -77,6 +82,7 @@ function TravellersDetails() {
 
 
   useEffect(() => {
+
     const generateInputs = () => {
       const allAdultTravelers = [];
       const allChildTravelers = [];
@@ -171,6 +177,59 @@ function TravellersDetails() {
     }
   }
 
+  const initPayment = (data, bookingData) => {
+    console.log("Inside initPayment function");
+    console.log(process.env.REACT_APP_API_KEY);
+    console.log(data.id);
+    const amount_to_pay = bookingData.book_cost * 100;
+    console.log(amount_to_pay);
+
+    const options = {
+      key: process.env.REACT_APP_API_KEY,
+      amount: amount_to_pay,
+      currency: data.currency,
+      name: "Selected Package",
+      description: "Testing",
+      image: tourImage,
+      order_id: data.id,
+      handler: async (response) => {
+        try {
+          console.log("Inside handler function");
+          console.log(response);
+
+          const newResponse = {
+            response,
+            bookingData
+          };
+          console.log(newResponse);
+
+          const apiResponse = await fetch("http://localhost:5000/verify", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newResponse),
+          });
+
+          const responseData = await apiResponse.json();
+          console.log(responseData.message);
+
+          if (apiResponse.status === 200) {
+            window.alert("Your Bookings Are Confirmed");
+            navigate('/Home');
+          } else {
+            throw new Error("Booking Failed");
+          }
+        } catch (error) {
+          console.error("Error in handler function:", error);
+        }
+      },
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -188,8 +247,7 @@ function TravellersDetails() {
     bookingData.book_travellers = [...adultTravelers, ...childTravelers];
     console.log(bookingData);
     try {
-      // Send the booking data to the server
-      const response = await fetch('http://localhost:5000/bookings', {
+      const response = await fetch('http://localhost:5000/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,19 +255,16 @@ function TravellersDetails() {
         body: JSON.stringify(bookingData),
       });
 
-      if (response.status === 201) {
-        const savedBooking = await response.json();
-        console.log('Booking created:', savedBooking);
-        window.alert("Booking Confirmed");
-        navigate("/Home");
-        // Handle success, e.g., show a success message to the user
+      if (response.status === 200) {
+        const resData = await response.json();
+        console.log('Booking created:', resData.savedBooking);
+        console.log("Order details:", resData.data);
+        initPayment(resData.data, resData.savedBooking);
       } else {
         console.error('Error creating booking');
-        // Handle the error, e.g., show an error message to the user
       }
     } catch (error) {
       console.error('Error sending booking data:', error);
-      // Handle network errors or other issues
     }
   };
 
@@ -315,7 +370,7 @@ function TravellersDetails() {
                 className="btn btn-primary"
                 disabled={!agreedToTerms}
               >
-                Book
+                Book By Paying {bookingData.book_cost}
               </StyledSubmitButton>
             </StyledFormGroup>
           </form>

@@ -15,6 +15,8 @@ export default function BookingPage() {
     package_guide: "", 
   });
 
+  const [isDisabled, setisDisabled] = useState(false);
+
   function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -104,7 +106,6 @@ export default function BookingPage() {
             <li key={place._id}>
               <p>Place Name: {place.place_name}</p>
               <p>Place Description: {place.place_desc}</p>
-              {/* Add more place details here */}
             </li>
         ))}
       </ul>
@@ -130,7 +131,6 @@ export default function BookingPage() {
 
       <button value="Book" className="btn btn-primary" onClick={handleBook}>Book</button>
       
-      {/* You can add more details here */}
     </div>
   );
 }

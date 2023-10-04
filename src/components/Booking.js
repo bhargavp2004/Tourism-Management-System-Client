@@ -10,14 +10,14 @@ function Booking() {
   const location = useLocation();
   const selectedDate = location.state.selectedDate;
   const navigate = useNavigate();
-  
+
   const [bookingData, setBookingData] = useState({
     book_date: "",
     book_adult: 0,
     book_child: 0,
     book_cost: 0,
-    book_user: "", 
-    book_pack: "", 
+    book_user: "",
+    book_pack: "",
     book_travellers: [],
   });
 
@@ -36,7 +36,7 @@ function Booking() {
       }
     };
 
-    fetchData(); // Call the async function
+    fetchData();
     pricegenerator();
   }, [bookingData.book_child, bookingData.book_adult]);
 
@@ -53,18 +53,28 @@ function Booking() {
     console.log(selectedDate);
     e.preventDefault();
 
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    const formattedDate = `${year}-${month}-${day}`;
+    const adults = parseInt(bookingData.book_adult, 10);
+    const children = parseInt(bookingData.book_child, 10);
+    const total = adults + children;
+    console.log(total);
 
-    bookingData.book_date = formattedDate;
-    bookingData.book_pack = selectedDate._id;
-    // Handle form submission, you can send bookingData to the server or perform other actions
-    console.log(bookingData);
+    if (total > selectedDate.rem_book) {
+      window.alert(`No More Slots Are Available, Slots Available = ${selectedDate.rem_book}`);
+    }
+    else {
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+      const day = String(currentDate.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`;
 
-    navigate("/traveler", { state: { bookingData } });
+      bookingData.book_date = formattedDate;
+      bookingData.book_pack = selectedDate._id;
+      console.log(bookingData);
+
+      navigate("/traveler", { state: { bookingData } });
+    }
+
   };
 
   function pricegenerator() {
@@ -149,7 +159,6 @@ function Booking() {
                         </div>
                       </form>
                     </div>
-                    {/* Image */}
                   </div>
                 </div>
               </div>

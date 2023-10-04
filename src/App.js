@@ -20,6 +20,7 @@ import Updateguidedetails from './components/updateguidedetails';
 import Updateplacedetails from './components/updateplacedetails';
 import Travelers from './components/travellersdetails';
 import UserProfile from './components/UserProfile';
+import MakePayment from './components/MakePayment';
 export const GlobalContext = createContext();
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
           <Route exact path="/updateplacedetails/:id" element={<Updateplacedetails />}></Route>
           <Route exact path="/traveler" element={<Travelers />}></Route>
           <Route exact path="/profile" element={<UserProfile />}></Route>
+          {/* <Route exact path="/makePayment" element={<MakePayment />}></Route> */}
         </Routes>
       </Router>
     </GlobalContext.Provider>
