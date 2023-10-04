@@ -37,16 +37,6 @@ function App() {
            
           />
         </div>
-        <div className="col-md-4">
-          <MyCard
-            img={img1}
-            title="Add Dates"
-            desc="Add Dates to Package"
-            add="/adddate"
-            update="/updatedate"
-           
-          />
-        </div>
       </div>
       
 
