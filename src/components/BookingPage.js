@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../App";
 import jwtDecode from "jwt-decode";
 import CommentSection from "./CommentSection";
+import 'bootstrap/dist/css/bootstrap.css';
+
 export default function BookingPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ export default function BookingPage() {
   useEffect(() => {
     // Retrieve the token from local storage
     const token = localStorage.getItem("token");
-    // Check if a token exists
+    
     if (token) {
       try {
         // Decode the token to get the payload
@@ -151,56 +153,54 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="container-fluid">
-      <h1>Package Details</h1>
-      <p>Package Name: {packageData.package_name}</p>
-      <p>Package Overview: {packageData.package_overview}</p>
-      <p>Package Days: {packageData.package_days}</p>
-      <p>Package Price: Rs. {packageData.package_price}</p>
+    <div className="container mt-5">
+      <div className="card">
+        <div className="card-body">
+          <h1 className="card-title display-4 mb-4">Package Details</h1>
+          <p className="card-text lead">Package Name: {packageData.package_name}</p>
+          <p className="card-text lead">Package Overview: {packageData.package_overview}</p>
+          <p className="card-text lead">Package Days: {packageData.package_days}</p>
+          <p className="card-text lead">Package Price: Rs. {packageData.package_price}</p>
 
-      <h2>Associated Places</h2>
-      <ul>
-        {placeData.map((place) => (
-          <li key={place._id}>
-            <p>Place Name: {place.place_name}</p>
-            <p>Place Description: {place.place_desc}</p>
-            {/* Add more place details here */}
-          </li>
-        ))}
-      </ul>
+          <h2 className="mt-4">Associated Places</h2>
+          <ul className="list-group mb-4">
+            {placeData.map((place) => (
+              <li key={place._id} className="list-group-item">
+                <h4 className="mb-0">{place.place_name}</h4>
+                <p className="mb-0">{place.place_desc}</p>
+              </li>
+            ))}
+          </ul>
 
-      <h2>Select Date</h2>
-      <form>
-        {dates.map((date) => (
-          <div key={date._id}>
-            <input
-              type="radio"
-              id={`date_${date._id}`}
-              name="selectedDate"
-              value={date.start_date}
-              onChange={() => handleDateSelection(date)}
-              style={{ marginRight: 10 + "px" }}
-            />
-            <label htmlFor={`date_${date._id}`}>
-              {formatDate(date.start_date)} - {formatDate(date.end_date)}{" "}
-              Booking Remaining : {date.rem_book}
-            </label>
-          </div>
-        ))}
-      </form>
+          <h2 className="mt-4">Select Date</h2>
+          <form>
+            {dates.map((date) => (
+              <div key={date._id} className="form-check mb-2">
+                <input
+                  type="radio"
+                  id={`date_${date._id}`}
+                  name="selectedDate"
+                  value={date.start_date}
+                  onChange={() => handleDateSelection(date)}
+                  className="form-check-input"
+                />
+                <label htmlFor={`date_${date._id}`} className="form-check-label">
+                  {formatDate(date.start_date)} - {formatDate(date.end_date)}{" "}
+                  <span className="badge bg-primary">Remaining: {date.rem_book}</span>
+                </label>
+              </div>
+            ))}
+          </form>
 
-      {isAdmin && (
-        <>
-          <button className="btn btn-primary" onClick={handleAddDateClick}>
-            {showDateInputs ? "Hide Date Inputs" : "Add Date"}
-          </button>
-          {showDateInputs && (
+          {isAdmin && (
             <>
-              {/* Date input fields */}
-              <div className="mb-4">
-                <div className="d-flex flex-row align-items-center mb-4">
-                  <i className="fas fa-calendar fa-lg me-3 fa-fw"></i>
-                  <div className="form-outline flex-fill mb-0">
+              <button className="btn btn-primary mt-3" onClick={handleAddDateClick}>
+                {showDateInputs ? "Hide Date Inputs" : "Add Date"}
+              </button>
+              {showDateInputs && (
+                <>
+                  {/* Date input fields */}
+                  <div className="mb-3">
                     <input
                       type="date"
                       id="start_date"
@@ -209,16 +209,8 @@ export default function BookingPage() {
                       value={startDate}
                       onChange={handleStartDateChange}
                     />
-                    <label className="form-label" htmlFor="start_date">
-                      Start Date
-                    </label>
                   </div>
-                </div>
-              </div>
-              <div className="mb-4">
-                <div className="d-flex flex-row align-items-center mb-4">
-                  <i className="fas fa-calendar fa-lg me-3 fa-fw"></i>
-                  <div className="form-outline flex-fill mb-0">
+                  <div className="mb-3">
                     <input
                       type="date"
                       id="end_date"
@@ -227,26 +219,23 @@ export default function BookingPage() {
                       value={endDate}
                       onChange={handleEndDateChange}
                     />
-                    <label className="form-label" htmlFor="end_date">
-                      End Date
-                    </label>
                   </div>
-                </div>
-              </div>
-              {/* Save button */}
-              <button className="btn btn-primary" onClick={handleSaveClick}>
-                Save
-              </button>
+                  {/* Save button */}
+                  <button className="btn btn-success" onClick={handleSaveClick}>
+                    Save
+                  </button>
+                </>
+              )}
             </>
           )}
-        </>
-      )}
-      {!isAdmin && (
-        <button value="Book" className="btn btn-primary" onClick={handleBook}>
-          Book
-        </button>
-      )}
-      <CommentSection packid = {id}></CommentSection>
+          {!isAdmin && (
+            <button className="btn btn-success mt-3" onClick={handleBook}>
+              Book Now
+            </button>
+          )}
+        </div>
+      </div>
+      <CommentSection packid={id}></CommentSection>
     </div>
   );
 }

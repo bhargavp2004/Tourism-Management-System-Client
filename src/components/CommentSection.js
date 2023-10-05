@@ -63,21 +63,30 @@ function CommentSection(props) {
       .catch((error) => console.error('Error adding comment:', error));
   };
 
-  return (
-    <div>
+   return (
+    <div className="container mt-5">
       <h2>Comments</h2>
-      <div>
-        {console.log(comments)}
-      {comments && comments.map((comment) => (
-      <div >{comment}</div>
-    ))}
+      <div className="mb-3">
+        {comments && comments.map((comment, index) => (
+          <div key={index} className="alert alert-primary" role="alert">
+            {comment}
+          </div>
+        ))}
       </div>
-      <textarea
-        placeholder="Add a comment"
-        value={newComment}
-        onChange={handleCommentChange}
-      />
-      <button onClick={handleSubmitComment}>Add Comment</button>
+      <div className="mb-3">
+        <textarea
+          className="form-control"
+          placeholder="Add a comment"
+          value={newComment}
+          onChange={handleCommentChange}
+        />
+      </div>
+      <button
+        className="btn btn-primary"
+        onClick={handleSubmitComment}
+      >
+        Add Comment
+      </button>
     </div>
   );
 }

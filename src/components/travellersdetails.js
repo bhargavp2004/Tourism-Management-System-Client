@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import jwtDecode from 'jwt-decode'; 
 import tourImage from '../images/pic2.jpg';
+import 'bootstrap/dist/css/bootstrap.css';
+
 import env from "react-dotenv";
 // const Razorpay = require('razorpay');
 // var instance = new Razorpay({ key_id: process.env.API_KEY, key_secret: process.env.API_SECRET_KEY });
@@ -137,6 +139,15 @@ function TravellersDetails() {
   
   const [packageData, setPackageData] = useState(null);
 
+  const [packages, setPackages] = useState({
+    package_name: "",
+    package_overview: "",
+    package_days: "",
+    package_price: "",
+    package_place: [], // Initialize as an empty array
+    package_guide: "",
+  });
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -177,18 +188,38 @@ function TravellersDetails() {
     }
   }
 
-  const initPayment = (data, bookingData) => {
+    var packageName;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/getpackagebypackdate/${bookingData.book_pack}`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          packageName = data.package_name
+        } else {
+          console.error("Error fetching packages:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching packages:", error);
+      }
+    };
+
+
+  const initPayment = async (data, bookingData) => {
     console.log("Inside initPayment function");
     console.log(process.env.REACT_APP_API_KEY);
     console.log(data.id);
     const amount_to_pay = bookingData.book_cost * 100;
     console.log(amount_to_pay);
+    await fetchData();
+    
 
+   
     const options = {
       key: process.env.REACT_APP_API_KEY,
       amount: amount_to_pay,
       currency: data.currency,
-      name: "Selected Package",
+      name: `Package : ${packageName}`,
       description: "Testing",
       image: tourImage,
       order_id: data.id,
@@ -225,7 +256,8 @@ function TravellersDetails() {
         }
       },
     };
-
+    console.log(packages);
+    console.log("Name ", options.name);
     const rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
