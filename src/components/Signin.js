@@ -64,7 +64,7 @@ export default function Signin(props) {
     <>
     {isLoggedIn}
     {isAdmin}
-     <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
+     <div className="d-flex justify-content-center align-items-center vh-100" style={{ position:"sticky", backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style={{ backgroundColor: 'white' }}>
 
           <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>

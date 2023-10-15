@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PackageCard from "./packageCard";
 import tourismImage from '../images/pic3.jpg';
 
-import '../styles/Home.css';
+import '../styles/demoHome.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 
