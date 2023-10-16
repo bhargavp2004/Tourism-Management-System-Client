@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import GuideCard from "./guidecard";
-
+import {PulseLoader as DotLoader} from "react-spinners";
 export default function Updateguide() {
 
   const [guides, setGuide] = useState([]);
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +19,9 @@ export default function Updateguide() {
       } catch (error) {
         console.error("Error fetching places:", error);
       }
+      finally{
+        setloading(false);
+      }
     };
 
     fetchData(); // Call the async function
@@ -30,7 +34,12 @@ export default function Updateguide() {
   return (
     <div>
       <div>
-        {guides.map((guide) => (
+        {loading ? (
+           <div className="text-center justify-content-center">
+           <DotLoader color="rgb(0, 0, 77)" loading={true} size={50} />
+         </div>
+          ) : 
+          guides.map((guide) => (
           <GuideCard
             key={guide._id}
             idd = {guide._id}

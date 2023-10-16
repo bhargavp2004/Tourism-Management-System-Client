@@ -5,27 +5,26 @@ import { GlobalContext } from "../App";
 import jwtDecode from "jwt-decode";
 import CommentSection from "./CommentSection";
 import 'bootstrap/dist/css/bootstrap.css';
+import { PulseLoader as DotLoader } from "react-spinners";
 
 export default function BookingPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [userid, setUserid] = useState("");
+  const [placeloading, setplaceloading] = useState(true);
+  const [dateloading, setdateloading] = useState(true);
 
   useEffect(() => {
-    // Retrieve the token from local storage
     const token = localStorage.getItem("token");
-    
+
     if (token) {
       try {
-        // Decode the token to get the payload
         const decodedToken = jwtDecode(token);
-        // Extract the username from the payload (adjust this based on your token structure)
         const { id } = decodedToken.user;
-        // Set the username in the component's state
+
         setUserid(id);
       } catch (error) {
-        // Handle any decoding errors
         console.error("Error decoding token:", error);
       }
     }
@@ -60,11 +59,9 @@ export default function BookingPage() {
       });
 
       if (response.ok) {
-        // Handle success
         console.log("Dates saved successfully!");
         window.location.reload();
       } else {
-        // Handle error
         console.error("Error saving dates:", response.statusText);
       }
     } catch (error) {
@@ -77,7 +74,7 @@ export default function BookingPage() {
     package_overview: "",
     package_days: "",
     package_price: "",
-    package_place: [], // Initialize as an empty array
+    package_place: [],
     package_guide: "",
   });
 
@@ -101,7 +98,7 @@ export default function BookingPage() {
       }
     };
 
-    fetchData(); // Call the async function
+    fetchData();
   }, []);
 
   const [placeData, getplaces] = useState([]);
@@ -120,9 +117,12 @@ export default function BookingPage() {
       } catch (error) {
         console.error("Error fetching packages:", error);
       }
+      finally {
+        setplaceloading(false);
+      }
     };
 
-    fetchData(); // Call the async function
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -137,6 +137,9 @@ export default function BookingPage() {
         }
       } catch (error) {
         console.error("Error fetching dates:", error);
+      }
+      finally {
+        setdateloading(false);
       }
     };
     fetchDates();
@@ -154,27 +157,32 @@ export default function BookingPage() {
 
   return (
     <div className="container mt-5">
-      <div className="card">
+      <div className="card shadow">
         <div className="card-body">
-          <h1 className="card-title display-4 mb-4">Package Details</h1>
-          <p className="card-text lead">Package Name: {packageData.package_name}</p>
-          <p className="card-text lead">Package Overview: {packageData.package_overview}</p>
-          <p className="card-text lead">Package Days: {packageData.package_days}</p>
-          <p className="card-text lead">Package Price: Rs. {packageData.package_price}</p>
+          <h1 className="card-title display-4 mb-4 text-primary">Package Details</h1>
+          <p className="card-text lead"><strong>Package Name: {packageData.package_name}</strong></p>
+          <p className="card-text lead"><strong>Package Overview: {packageData.package_overview}</strong></p>
+          <p className="card-text lead"><strong>Package Days: {packageData.package_days}</strong></p>
+          <p className="card-text lead"><strong>Package Price: Rs. {packageData.package_price}</strong></p>
 
-          <h2 className="mt-4">Associated Places</h2>
-          <ul className="list-group mb-4">
-            {placeData.map((place) => (
-              <li key={place._id} className="list-group-item">
-                <h4 className="mb-0">{place.place_name}</h4>
-                <p className="mb-0">{place.place_desc}</p>
-              </li>
-            ))}
-          </ul>
-
-          <h2 className="mt-4">Select Date</h2>
+          <h2 className="mt-4 text-primary">Associated Places</h2>
+          {placeloading ? (<div className="text-center justify-content-center">
+            <DotLoader color="rgb(0, 0, 77)" loading={true} size={25} />
+          </div>) :
+            <ul className="list-group mb-4">
+              {placeData.map((place) => (
+                <li key={place._id} className="list-group-item">
+                  <h4 className="mb-0">{place.place_name}</h4>
+                  <p className="mb-0">{place.place_desc}</p>
+                </li>
+              ))}
+            </ul>
+          }
+          <h2 className="mt-4 text-primary">Select Date</h2>
           <form>
-            {dates.map((date) => (
+            {dateloading ? (<div className="text-center justify-content-center">
+              <DotLoader color="rgb(0, 0, 77)" loading={true} size={50} />
+            </div>) : dates.map((date) => (
               <div key={date._id} className="form-check mb-2">
                 <input
                   type="radio"
@@ -186,7 +194,7 @@ export default function BookingPage() {
                 />
                 <label htmlFor={`date_${date._id}`} className="form-check-label">
                   {formatDate(date.start_date)} - {formatDate(date.end_date)}{" "}
-                  <span className="badge bg-primary">Remaining: {date.rem_book}</span>
+                  <span className="badge bg-success">Remaining: {date.rem_book}</span>
                 </label>
               </div>
             ))}
@@ -199,8 +207,7 @@ export default function BookingPage() {
               </button>
               {showDateInputs && (
                 <>
-                  {/* Date input fields */}
-                  <div className="mb-3">
+                  <div className="form-group mt-3">
                     <input
                       type="date"
                       id="start_date"
@@ -210,7 +217,7 @@ export default function BookingPage() {
                       onChange={handleStartDateChange}
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="form-group mt-3">
                     <input
                       type="date"
                       id="end_date"
@@ -220,8 +227,7 @@ export default function BookingPage() {
                       onChange={handleEndDateChange}
                     />
                   </div>
-                  {/* Save button */}
-                  <button className="btn btn-success" onClick={handleSaveClick}>
+                  <button className="btn btn-success mt-3" onClick={handleSaveClick}>
                     Save
                   </button>
                 </>

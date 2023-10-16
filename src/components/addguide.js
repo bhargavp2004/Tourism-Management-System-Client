@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import tourismImage from '../images/pic2.jpg';
+import tourismImage from '../images/pic3.jpg';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ export default function Signup() {
   return (
     <>
 
-      <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
+      <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundSize: 'cover', backgroundAttachment:"fixed", position : "sticky" }}>
         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style={{ backgroundColor: 'white' }}>
           <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"> Add Guide</p>
 

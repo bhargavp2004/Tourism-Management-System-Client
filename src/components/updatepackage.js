@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PackageCard from "./packageCard";
+import tourismImage from '../images/pic3.jpg';
+import { NavLink } from "react-router-dom";
+import {PulseLoader as DotLoader} from "react-spinners";
 
 export default function Updatepackage() {
   const navigate = useNavigate();
   const [packages, setPackages] = useState([]);
-  const [guideUsernames, setGuideUsernames] = useState({}); // Store guide usernames
-
+  const [packageLoading, setpackageLoading] = useState(true);
+  const [guideUsernames, setGuideUsernames] = useState({}); 
+  const [guideLoading, setguideLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,6 +23,9 @@ export default function Updatepackage() {
         }
       } catch (error) {
         console.error("Error fetching places:", error);
+      }
+      finally{
+        setpackageLoading(false);
       }
     };
 
@@ -41,23 +48,39 @@ export default function Updatepackage() {
     } catch (error) {
       console.error("Error fetching guide usernames:", error);
     }
+    finally{
+      setguideLoading(false);
+    }
   }
 
   return (
-    <div>
-      <div>
-        {packages.map((pack) => (
-          <PackageCard
-            key={pack._id}
-            idd = {pack._id}
-            package_name={pack.package_name}
-            package_days={pack.package_days}
-            package_price={pack.package_price}
-            package_guide={guideUsernames[pack.package_guide] || ""}
-            add="/updatepackdetails" // Use the guide username from state
-            task="Update"
-          />
-        ))}
+    <div className="container-xxl py-5">
+      <div className="row row-cols-1 row-cols-md-4 g-4">
+
+        {packageLoading ? (
+           <div className="text-center">
+           <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+         </div>
+        ) : (packages.map((pack) => (
+          <div className="col" key={pack._id}>
+            <div className="card mb-4">
+              <img src={tourismImage} className="card-img-top" alt="Package" />
+              <div className="card-body">
+                <h5 className="card-title">{pack.package_name}</h5>
+                <p className="card-text">Duration: {pack.package_days} days</p>
+                <p className="card-text">Price: ${pack.package_price}</p>
+                {guideLoading ? (
+                   <div className="text-center">
+                   <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                 </div>
+                ) : (<p className="card-text">Guide: {guideUsernames[pack.package_guide] || ""}</p>)}
+                <NavLink to={`/updatepackdetails/${pack._id}`} className="btn btn-primary">
+                  Update Package
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        )))}
       </div>
     </div>
   );

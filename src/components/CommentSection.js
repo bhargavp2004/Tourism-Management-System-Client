@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode'; 
-
+import jwtDecode from 'jwt-decode';
+import { PulseLoader as DotLoader } from 'react-spinners';
 function CommentSection(props) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [userid, setUserid] = useState('');
+  const [commentloading, setcommentloading] = useState(true);
 
   const packid = props.packid;
 
@@ -33,7 +34,9 @@ function CommentSection(props) {
       .then((data) => {
         setComments(data);
       })
-      .catch((error) => console.error('Error fetching comments:', error));
+      .catch((error) => console.error('Error fetching comments:', error)).finally(() => {
+        setcommentloading(false);
+      });
   }, [packid]); // Update comments when packid changes
 
   const handleCommentChange = (event) => {
@@ -58,8 +61,11 @@ function CommentSection(props) {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{backgroundColor : "white"}}>
       <h2>Comments</h2>
+      {commentloading ? (<div className="text-center justify-content-center">
+        <DotLoader color="rgb(0, 0, 77)" loading={true} size={25} />
+      </div>) : 
       <div className="mb-3">
         {comments &&
           comments.map((comment, index) => (
@@ -73,6 +79,7 @@ function CommentSection(props) {
             </div>
           ))}
       </div>
+      }
       <div className="mb-3">
         <textarea
           className="form-control"

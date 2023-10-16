@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap";
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { NavLink } from "react-router-dom";
 import LogoutButton from "./Logout";
 import { GlobalContext } from "../App";
@@ -10,6 +10,25 @@ export default function Navbar(props) {
   const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } =
     useContext(GlobalContext);
 
+    useEffect(() => {
+      // Manually initialize Bootstrap's collapse functionality
+      const toggler = document.querySelector(".navbar-toggler");
+      const target = document.querySelector("#navbarSupportedContent");
+  
+      toggler.addEventListener("click", () => {
+        target.classList.toggle("show");
+      });
+  
+      // Clean up event listener when component unmounts
+      return () => {
+        toggler.removeEventListener("click", () => {
+          target.classList.toggle("show");
+        });
+      };
+    }, []); // Empty dependency array ensures effect runs once after initial render
+
+    
+    
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-blue">

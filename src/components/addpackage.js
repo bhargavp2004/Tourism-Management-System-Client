@@ -150,7 +150,7 @@ export default function Signup() {
 
   return (
     <>
-      <div className="d-flex justify-content-center" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundSize: 'cover', zIndex: -1 }}>
+      <div className="d-flex justify-content-center" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundAttachment:"fixed",  backgroundSize: 'cover', zIndex: -1, position : "sticky" }}>
                 <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style={{ backgroundColor: 'white' }}>
                     <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                         Add Package

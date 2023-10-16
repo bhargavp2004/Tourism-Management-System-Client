@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import {PulseLoader as DotLoader} from "react-spinners";
 
 const styles = {
   selectContainer: {
@@ -27,10 +28,11 @@ export default function Updatepackdetails(props) {
   console.log(id);
   const [places, setPlaces] = useState([]);
   const [guides, setGuides] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingguide, setLoadingguide] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch places data
       try {
         const response = await fetch("http://localhost:5000/places");
         if (response.ok) {
@@ -42,8 +44,10 @@ export default function Updatepackdetails(props) {
       } catch (error) {
         console.error("Error fetching places:", error);
       }
+      finally{
+        setLoading(false);
+      }
 
-      // Fetch guides data
       try {
         const response = await fetch("http://localhost:5000/guides");
         if (response.ok) {
@@ -55,6 +59,10 @@ export default function Updatepackdetails(props) {
       } catch (error) {
         console.error("Error fetching guides:", error);
       }
+      finally {
+        setLoadingguide(false);
+      }
+
     };
 
     fetchData();
@@ -151,7 +159,7 @@ export default function Updatepackdetails(props) {
       const response = await fetch(`http://localhost:5000/deletePackage/${id}`, {
         method: "POST",
       });
-  
+
       if (response.ok) {
         // Package deleted successfully
         // You can redirect to a success page or show a success message
@@ -229,7 +237,11 @@ export default function Updatepackdetails(props) {
 
             <div className="mb-3">
               <label className="form-label">Package Places:</label>
-              {places.map((place) => (
+              {loading ? ( // Show loading spinner while loading is true
+                <div className="text-center">
+                  <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                </div>
+              ) : (places.map((place) => (
                 <div key={place._id} className="form-check">
                   <input
                     type="checkbox"
@@ -247,14 +259,18 @@ export default function Updatepackdetails(props) {
                     {place.place_name}
                   </label>
                 </div>
-              ))}
+              )))}
             </div>
 
             <div className="mb-3">
               <label htmlFor="package_guide" className="form-label">
                 Package Guide:
               </label>
-              <select
+              {loadingguide ? (
+                <div className="text-center">
+                  <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                </div>
+              ) : (<select
                 id="package_guide"
                 name="package_guide"
                 value={packages.package_guide}
@@ -268,6 +284,7 @@ export default function Updatepackdetails(props) {
                   </option>
                 ))}
               </select>
+              )}
             </div>
             <button type="submit" className="btn btn-primary">
               Update Package
