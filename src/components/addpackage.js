@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tourismImage from "../images/pic5.jpg";
+import { PulseLoader as DotLoader } from "react-spinners";
 
 export default function Signup() {
   const [places, setPlaces] = useState([]);
-
+  const [placesloading, setplacesloading] = useState(true);
+  const [guidesloading, setguidesloading] = useState(true);
 
 
   useEffect(() => {
@@ -19,6 +21,9 @@ export default function Signup() {
         }
       } catch (error) {
         console.error("Error fetching places:", error);
+      }
+      finally {
+        setplacesloading(false);
       }
     };
 
@@ -40,6 +45,9 @@ export default function Signup() {
       } catch (error) {
         console.error("Error fetching places:", error);
       }
+      finally {
+        setguidesloading(false);
+      }
     };
 
     fetchData(); // Call the async function
@@ -51,7 +59,7 @@ export default function Signup() {
     package_overview: "",
     package_days: "",
     package_price: "",
-    package_capacity :  "",
+    package_capacity: "",
     package_place: [],
     package_guide: "",
     start_date: "",
@@ -63,11 +71,8 @@ export default function Signup() {
   const handleInputs = (e) => {
     name = e.target.name;
     value = e.target.value;
-
-    // Handle package_place separately as an array
     if (name === 'package_place') {
-      // If the checkbox is checked, add the value to the array
-      // If it's unchecked, remove it from the array
+
       if (e.target.checked) {
         setPackage((prevPackage) => ({
           ...prevPackage,
@@ -150,223 +155,230 @@ export default function Signup() {
 
   return (
     <>
-      <div className="d-flex justify-content-center" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundAttachment:"fixed",  backgroundSize: 'cover', zIndex: -1, position : "sticky" }}>
-                <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style={{ backgroundColor: 'white' }}>
-                    <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                        Add Package
-                    </p>
+      <div className="d-flex justify-content-center" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundAttachment: "fixed", backgroundSize: 'cover', zIndex: -1, position: "sticky" }}>
+        <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style={{ backgroundColor: 'white' }}>
+          <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+            Add Package
+          </p>
 
-                    <form method="post" className="mx-1 mx-md-4" style={{ zIndex: 1 }}>
-                        <div className="d-flex flex-row align-items-center mb-4">
-                            <i className="fa fa-user fa-lg me-3 fa-fw"></i>
-                            <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="text"
-                              id="package_name"
-                              className="form-control"
-                              name="package_name"
-                              value={packages.package_name}
-                              onChange={handleInputs}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="package_name"
-                            >
-                              Package Name
-                            </label>
+          <form method="post" className="mx-1 mx-md-4" style={{ zIndex: 1 }}>
+            <div className="d-flex flex-row align-items-center mb-4">
+              <i className="fa fa-user fa-lg me-3 fa-fw"></i>
+              <div className="form-outline flex-fill mb-0">
+                <input
+                  type="text"
+                  id="package_name"
+                  className="form-control"
+                  name="package_name"
+                  value={packages.package_name}
+                  onChange={handleInputs}
+                />
+                <label
+                  className="form-label"
+                  htmlFor="package_name"
+                >
+                  Package Name
+                </label>
 
-                            </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                            <i className="fa fa-user fa-lg me-3 fa-fw"></i>
-                            <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="text"
-                              id="package_overview"
-                              className="form-control"
-                              name="package_overview"
-                              value={packages.package_overview}
-                              onChange={handleInputs}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="package_overview"
-                            >
-                              Description about package
-                            </label>
-                            </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                            <i className="fa fa-envelope fa-lg me-3 fa-fw"></i>
-                            <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="Number"
-                              id="package_days"
-                              className="form-control"
-                              name="package_days"
-                              value={packages.package_days}
-                              onChange={handleInputs}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="package_days"
-                            >
-                              No of Days
-                            </label>
-                            </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                            <i className="fa fa-key fa-lg me-3 fa-fw"></i>
-                            <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="Number"
-                              id="package_price"
-                              className="form-control"
-                              name="package_price"
-                              value={packages.package_price}
-                              onChange={handleInputs}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="package_price"
-                            >
-                              Package Price
-                            </label>
-                            </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                            <i className="fa fa-lock fa-lg me-3 fa-fw"></i>
-                            <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="Number"
-                              id="package_capacity"
-                              className="form-control"
-                              name="package_capacity"
-                              value={packages.package_capacity}
-                              onChange={handleInputs}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="package_capacity"
-                            >
-                              Capacity
-                            </label>
-                            </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                            <i className="fa fa-lock fa-lg me-3 fa-fw"></i>
-                            <div className="form-outline flex-fill mb-0">
-                            <div className="border rounded p-3">
-                              {" "}
-                              {/* Add border and padding */}
-                              {places.map((place) => (
-                                <div key={place._id} className="form-check">
-                                  <input
-                                    type="checkbox"
-                                    id={`place_${place._id}`}
-                                    className="form-check-input"
-                                    name="package_place"
-                                    value={place._id}
-                                    checked={packages.package_place.includes(place._id)}
-                                    onChange={handleInputs}
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor={`place_${place._id}`}
-                                  >
-                                    {place.place_name}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                            <label className="form-label">Places</label>
-                            </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-                            <div className="border rounded p-3">
-                              {" "}
-                              {guides.map((guide) => (
-                                <div key={guide._id} className="form-check">
-                                  <input
-                                    type="checkbox"
-                                    id={`guide_${guide._id}`}
-                                    className="form-check-input"
-                                    name="package_guide"
-                                    value={guide._id}
-                                    checked={packages.package_guide.includes(
-                                      guide._id
-                                    )} // Check if the place is included in selected places
-                                    onChange={handleInputs}
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor={`guide_${guide._id}`}
-                                  >
-                                    {guide.username}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                            <label className="form-label">Guides</label>
-                          </div>
-                        </div>
-                        <div className="mb-4">
-                          <div className="d-flex flex-row align-items-center mb-4">
-                            <i className="fas fa-calendar fa-lg me-3 fa-fw"></i>
-                            <div className="form-outline flex-fill mb-0">
-                              <input
-                                type="date"
-                                id="start_date"
-                                className="form-control"
-                                name="start_date"
-                                value={packages.start_date}
-                                onChange={handleInputs}
-                              />
-                              <label className="form-label" htmlFor="start_date">
-                                Start Date
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="mb-4">
-                          <div className="d-flex flex-row align-items-center mb-4">
-                            <i className="fas fa-calendar fa-lg me-3 fa-fw"></i>
-                            <div className="form-outline flex-fill mb-0">
-                              <input
-                                type="date"
-                                id="end_date"
-                                className="form-control"
-                                name="end_date"
-                                value={packages.end_date}
-                                onChange={handleInputs}
-                              />
-                              <label className="form-label" htmlFor="end_date">
-                                End Date
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-lg"
-                            onClick={PostData}
-                          >
-                            Add Package
-                          </button>
-                        </div>
-                      </form>
-                </div>
+              </div>
             </div>
+
+            <div className="d-flex flex-row align-items-center mb-4">
+              <i className="fa fa-user fa-lg me-3 fa-fw"></i>
+              <div className="form-outline flex-fill mb-0">
+                <input
+                  type="text"
+                  id="package_overview"
+                  className="form-control"
+                  name="package_overview"
+                  value={packages.package_overview}
+                  onChange={handleInputs}
+                />
+                <label
+                  className="form-label"
+                  htmlFor="package_overview"
+                >
+                  Description about package
+                </label>
+              </div>
+            </div>
+
+            <div className="d-flex flex-row align-items-center mb-4">
+              <i className="fa fa-envelope fa-lg me-3 fa-fw"></i>
+              <div className="form-outline flex-fill mb-0">
+                <input
+                  type="Number"
+                  id="package_days"
+                  className="form-control"
+                  name="package_days"
+                  value={packages.package_days}
+                  onChange={handleInputs}
+                />
+                <label
+                  className="form-label"
+                  htmlFor="package_days"
+                >
+                  No of Days
+                </label>
+              </div>
+            </div>
+
+            <div className="d-flex flex-row align-items-center mb-4">
+              <i className="fa fa-key fa-lg me-3 fa-fw"></i>
+              <div className="form-outline flex-fill mb-0">
+                <input
+                  type="Number"
+                  id="package_price"
+                  className="form-control"
+                  name="package_price"
+                  value={packages.package_price}
+                  onChange={handleInputs}
+                />
+                <label
+                  className="form-label"
+                  htmlFor="package_price"
+                >
+                  Package Price
+                </label>
+              </div>
+            </div>
+
+            <div className="d-flex flex-row align-items-center mb-4">
+              <i className="fa fa-lock fa-lg me-3 fa-fw"></i>
+              <div className="form-outline flex-fill mb-0">
+                <input
+                  type="Number"
+                  id="package_capacity"
+                  className="form-control"
+                  name="package_capacity"
+                  value={packages.package_capacity}
+                  onChange={handleInputs}
+                />
+                <label
+                  className="form-label"
+                  htmlFor="package_capacity"
+                >
+                  Capacity
+                </label>
+              </div>
+            </div>
+
+            <div className="d-flex flex-row align-items-center mb-4">
+              <i className="fa fa-lock fa-lg me-3 fa-fw"></i>
+              <div className="form-outline flex-fill mb-0">
+                <div className="border rounded p-3">
+                  {" "}
+                  {/* Add border and padding */}
+                  {placesloading ?
+                    (<div className="text-center">
+                      <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                    </div>) : places.map((place) => (
+                      <div key={place._id} className="form-check">
+                        <input
+                          type="checkbox"
+                          id={`place_${place._id}`}
+                          className="form-check-input"
+                          name="package_place"
+                          value={place._id}
+                          checked={packages.package_place.includes(place._id)}
+                          onChange={handleInputs}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`place_${place._id}`}
+                        >
+                          {place.place_name}
+                        </label>
+                      </div>
+                    ))}
+                </div>
+                <label className="form-label">Places</label>
+              </div>
+            </div>
+
+            <div className="d-flex flex-row align-items-center mb-4">
+              <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+              <div className="form-outline flex-fill mb-0">
+                <div className="border rounded p-3">
+                  {" "}
+                  {guidesloading ? (
+                     <div className="text-center">
+                     <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                   </div>
+                  ) : guides.map((guide) => (
+                    <div key={guide._id} className="form-check">
+                      <input
+                        type="checkbox"
+                        id={`guide_${guide._id}`}
+                        className="form-check-input"
+                        name="package_guide"
+                        value={guide._id}
+                        checked={packages.package_guide.includes(
+                          guide._id
+                        )} // Check if the place is included in selected places
+                        onChange={handleInputs}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor={`guide_${guide._id}`}
+                      >
+                        {guide.username}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                <label className="form-label">Guides</label>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="d-flex flex-row align-items-center mb-4">
+                <i className="fas fa-calendar fa-lg me-3 fa-fw"></i>
+                <div className="form-outline flex-fill mb-0">
+                  <input
+                    type="date"
+                    id="start_date"
+                    className="form-control"
+                    name="start_date"
+                    value={packages.start_date}
+                    onChange={handleInputs}
+                  />
+                  <label className="form-label" htmlFor="start_date">
+                    Start Date
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="d-flex flex-row align-items-center mb-4">
+                <i className="fas fa-calendar fa-lg me-3 fa-fw"></i>
+                <div className="form-outline flex-fill mb-0">
+                  <input
+                    type="date"
+                    id="end_date"
+                    className="form-control"
+                    name="end_date"
+                    value={packages.end_date}
+                    onChange={handleInputs}
+                  />
+                  <label className="form-label" htmlFor="end_date">
+                    End Date
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+              <button
+                type="button"
+                className="btn btn-primary btn-lg"
+                onClick={PostData}
+              >
+                Add Package
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
 
     </>
   );
