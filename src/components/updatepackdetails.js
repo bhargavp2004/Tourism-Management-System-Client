@@ -246,18 +246,18 @@ export default function Updatepackdetails(props) {
                   <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
                 </div>
               ) : (places.length > 0 ? places.map((place) => (
-                <div key={place._id} className="form-check">
+                <div key={place.place_id} className="form-check">
                   <input
                     type="checkbox"
-                    id={`place_${place._id}`}
+                    id={`place_${place.place_id}`}
                     name="package_place"
-                    value={place._id}
-                    checked={packages.package_place.includes(place._id)}
+                    value={place.place_id}
+                    checked={packages.package_place.includes(place.place_id)}
                     onChange={handlePlaceCheckboxChange}
                     className="form-check-input"
                   />
                   <label
-                    htmlFor={`place_${place._id}`}
+                    htmlFor={`place_${place.place_id}`}
                     className="form-check-label"
                   >
                     {place.place_name}

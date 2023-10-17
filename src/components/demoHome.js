@@ -65,7 +65,7 @@ function Home() {
                   <div className="card-body">
                     <h5 className="card-title">{pack.package_name}</h5>
                     <p className="card-text">Duration: {pack.package_days} days</p>
-                    <p className="card-text">Price: ${pack.package_price}</p>
+                    <p className="card-text">Price: Rs.{pack.package_price}</p>
                     <NavLink to={`/bookingPage/${pack._id}`} className="btn btn-primary">
                       Book Now
                     </NavLink>

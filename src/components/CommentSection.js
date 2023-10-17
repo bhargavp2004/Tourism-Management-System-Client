@@ -43,22 +43,45 @@ function CommentSection(props) {
     setNewComment(event.target.value);
   };
 
-  const handleSubmitComment = () => {
-    fetch(`http://localhost:5000/addComment`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ newComment, userid, packid }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setComments([...comments, data.newCom]);
+  const handleSubmitComment = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/addComment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newComment, userid, packid }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error adding comment');
+      }
+  
+      const data = await response.json();
+  
+      // Fetch the user associated with the new comment
+      const userResponse = await fetch(`http://localhost:5000/getUser/${userid}`); // Replace with the actual API endpoint for getting user details
+  
+      if (userResponse.ok) {
+        const userData = await userResponse.json();
+  
+        // Construct the comment object with username
+        const newCommentWithUsername = {
+          username: userData.username,
+          comment_desc: data.comment_desc, // Assuming the response structure from the server
+        };
+  
+        // Add the new comment to the comments state
+        setComments([...comments, newCommentWithUsername]);
+  
+        // Clear the textarea
         setNewComment('');
-        window.location.reload();
-      })
-      .catch((error) => console.error('Error adding comment:', error));
+      }
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
   };
+  
 
   return (
     <div className="container mt-5" style={{backgroundColor : "white"}}>
