@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import tourismImage from "../images/backgroundImg.jpg";
 import { GlobalContext } from "../App";
 import '../styles/Form.css';
+import { PulseLoader as DotLoader } from "react-spinners";
 
 export default function Signup() {
   const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } =
     useContext(GlobalContext);
+
+    const [registering, setregistering] = useState(false);
 
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -30,7 +33,7 @@ export default function Signup() {
 
   const PostData = async (e) => {
     e.preventDefault();
-    console.log("Post Data called");
+    setregistering(true);
 
     const {
       firstname,
@@ -51,11 +54,14 @@ export default function Signup() {
       !firstname ||
       !lastname
     ) {
+      setregistering(false);
       console.log("fill all the fields properly");
       window.alert("Fill all the fields properly");
+
       navigate("/signup");
     } else {
       if (password !== repeatPassword) {
+        setregistering(false);
         window.alert("Password and Repeat password field must match");
         navigate("/");
       } else {
@@ -77,11 +83,14 @@ export default function Signup() {
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", username);
         if (res.status === 400) {
+          setregistering(false);
           window.alert("Try with different username and email");
           navigate("/");
         } else if (res.status === 401) {
+          setregistering(false);
           window.alert("Found error");
         } else {
+          setregistering(false);
           window.alert("Registration Successful");
           setisLoggedIn(true);
           navigate("/Home");
@@ -93,13 +102,13 @@ export default function Signup() {
   return (
     <>
       {isLoggedIn && navigate('/Home')}
-      <div className="d-flex justify-content-center"  style={{backgroundImage: `url(${tourismImage})`, backgroundAttachment:"fixed", position:"sticky", backgroundPosition : "center", backgroundSize : 'cover', zIndex: -1}}>
+      <div className="d-flex justify-content-center"  style={{backgroundImage: `url(${tourismImage})`, backgroundAttachment:"fixed", position:"sticky", backgroundPosition : "center", backgroundSize : 'cover'}}>
         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style={{ backgroundColor: 'white' }}>
           <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
             Sign up
           </p>
 
-          <form method="post" className="mx-1 mx-md-4" style={{ zIndex: 1 }}>
+          <form method="post" className="mx-1 mx-md-4">
             <div className="d-flex flex-row align-items-center mb-4">
               <i className="fa fa-user fa-lg me-3 fa-fw"></i>
               <div className="form-outline flex-fill mb-0">
@@ -227,14 +236,16 @@ export default function Signup() {
             </div>
 
             <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-              <button
+              {registering ? (  <div className="text-center">
+                  <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                </div>) : (<button
                 type="button"
                 className="btn btn-primary btn-lg"
                 style={{ color: 'white' }}
                 onClick={PostData}
               >
                 Register
-              </button>
+              </button>)}
             </div>
           </form>
         </div>
