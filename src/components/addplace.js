@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tourismImage from "../images/pic4.jpg";
-
+import { PulseLoader as DotLoader } from "react-spinners";
 export default function AddPlace() {
   const navigate = useNavigate();
+  const [uploading, setuploading] = useState(false);
   const [place, setPlace] = useState({
     place_name: "",
     place_desc: "",
@@ -23,6 +24,7 @@ export default function AddPlace() {
 
   const PostData = async (e) => {
     e.preventDefault();
+    setuploading(true);
 
     const { place_name, place_desc, title, image } = place;
 
@@ -46,10 +48,11 @@ export default function AddPlace() {
       const data = await res.json();
 
       if (res.status === 201) {
-        window.alert("Registration Successful");
+        setuploading(false);
+        window.alert("Place added successfully");
         navigate("/adminhome");
       } else {
-        window.alert("Registration failed");
+        window.alert("failed to upload");
         navigate("/addplace");
       }
     } catch (error) {
@@ -141,7 +144,10 @@ export default function AddPlace() {
                 className="btn btn-primary btn-lg"
                 onClick={PostData}
               >
-                Add Place
+                {uploading ? <div className="text-center">
+                  <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                </div> : ("Add Place")}
+                
               </button>
             </div>
           </form>

@@ -61,7 +61,7 @@ export default function Updatepackage() {
            <div className="text-center">
            <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
          </div>
-        ) : (packages.map((pack) => (
+        ) : (packages.length > 0 ? packages.map((pack) => (
           <div className="col" key={pack._id}>
             <div className="card mb-4">
               <img src={tourismImage} className="card-img-top" alt="Package" />
@@ -80,7 +80,7 @@ export default function Updatepackage() {
               </div>
             </div>
           </div>
-        )))}
+        )) : (<div className="container" style={{backgroundColor : "rgba(0, 0, 77, 0.9"}}><h1 style={{padding : "20px", color :"white"}}>No Packages Available.</h1></div>))}
       </div>
     </div>
   );

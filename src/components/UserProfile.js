@@ -114,60 +114,55 @@ export default function UserProfile() {
   };
 
   return (
-    <div
-      className="container d-flex justify-content-center align-items-center"
-      style={{ height: "100vh" }}
-    >
-      <div className="card me-3" style={{ width: "200px" }}>
-        <div className="card-body">
-          <h2 className="card-title">Navigation</h2>
-          <ul className="nav flex-column">
-            <li className="nav-item">
-              <a
-                className={`nav-link ${
-                  selectedTab === "user-details" ? "active" : ""
-                }`}
-                onClick={() => handleTabClick("user-details")}
-                href="#"
-              >
-                User Details
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className={`nav-link ${
-                  selectedTab === "current-bookings" ? "active" : ""
-                }`}
-                onClick={() => handleTabClick("current-bookings")}
-                href="#"
-              >
-                Current Bookings
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className={`nav-link ${
-                  selectedTab === "history-bookings" ? "active" : ""
-                }`}
-                onClick={() => handleTabClick("history-bookings")}
-                href="#"
-              >
-                History Bookings
-              </a>
-            </li>
-          </ul>
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-3">
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Navigation</h5>
+              <ul className="nav flex-column">
+                <li className="nav-item">
+                  <a
+                    className={`nav-link ${
+                      selectedTab === "user-details" ? "active" : ""
+                    }`}
+                    onClick={() => handleTabClick("user-details")}
+                    href="#"
+                  >
+                    User Details
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className={`nav-link ${
+                      selectedTab === "current-bookings" ? "active" : ""
+                    }`}
+                    onClick={() => handleTabClick("current-bookings")}
+                    href="#"
+                  >
+                    Current Bookings
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className={`nav-link ${
+                      selectedTab === "history-bookings" ? "active" : ""
+                    }`}
+                    onClick={() => handleTabClick("history-bookings")}
+                    href="#"
+                  >
+                    History Bookings
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div
-        className="card"
-        style={{ width: "500px", maxHeight: "80vh", overflowY: "auto" }}
-      >
-        {selectedTab === "user-details" && (
-          <>
-            <div className="card" style={{ width: "500px" }}>
+        <div className="col-md-9">
+          {selectedTab === "user-details" && (
+            <div className="card">
               <div className="card-body">
-                <h2 className="card-title">Update User</h2>
+                <h5 className="card-title">Update User</h5>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label htmlFor="username" className="form-label">
@@ -240,32 +235,38 @@ export default function UserProfile() {
                 </form>
               </div>
             </div>
-          </>
-        )}
-        {selectedTab === "current-bookings" && (
-          <>
-            <ul>
-              {currbook.map((booking, index) => (
-                <li key={index}>
-                  <p>Date: {booking.book_date}</p>
-                  <p>Cost: {booking.book_cost}</p>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-        {selectedTab === "history-bookings" && (
-          <>
-            <ul>
-              {bookhist.map((booking, index) => (
-                <li key={index}>
-                  <p>Date: {booking.book_date}</p>
-                  <p>Cost: {booking.book_cost}</p>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
+          )}
+          {selectedTab === "current-bookings" && (
+            <div className="card mt-3">
+              <div className="card-body">
+                <h5 className="card-title">Current Bookings</h5>
+                <ul>
+                  {currbook.map((booking, index) => (
+                    <li key={index}>
+                      <p>Date: {booking.book_date}</p>
+                      <p>Cost: {booking.book_cost}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+          {selectedTab === "history-bookings" && (
+            <div className="card mt-3">
+              <div className="card-body">
+                <h5 className="card-title">History Bookings</h5>
+                <ul>
+                  {bookhist.map((booking, index) => (
+                    <li key={index}>
+                      <p>Date: {booking.book_date}</p>
+                      <p>Cost: {booking.book_cost}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

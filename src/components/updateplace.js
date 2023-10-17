@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PlaceCard from "./placeCard";
 import {PulseLoader as DotLoader} from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import '../styles/UpdatePlace.css';
  
 export default function Updateguide() {
 
@@ -27,9 +28,8 @@ export default function Updateguide() {
       }
     };
 
-    fetchData(); // Call the async function
+    fetchData(); 
 
-    // Fetch guide usernames when the component mounts
   }, []);
 
  
@@ -38,19 +38,19 @@ export default function Updateguide() {
     <div className="container-xxl py-5">
       <div className="row row-cols-1 row-cols-md-4 g-4">
         {loading ? (
-          <div className="text-center justify-content-center">
-            <DotLoader color="rgb(0, 0, 77)" loading={true} size={50} />
+          <div className="container" style={{ width : '100%'}}>
+          <DotLoader color="rgb(0, 0, 77)" loading={true} size={20} />
           </div>
         ) : (
-          places.map((place) => (
+          places.length > 0 ? places.map((place) => (
             <div className="col" key={place._id}>
               <div className="card mb-4">
-                <img src={place.image} className="card-img-top" alt="Place" />
+                <img src={`data:${place.contentType};base64,${place.image}`} className="card-img-top" alt="Place" />
                 <div className="card-body">
                   <h5 className="card-title">{place.place_name}</h5>
                   <p className="card-text">{place.place_desc}</p>
                   <button
-                    onClick={() => navigate(`/updateplacedetails/${place._id}`)}
+                    onClick={() => navigate(`/updateplacedetails/${place.place_id}`)}
                     className="btn btn-primary"
                   >
                     Update Place
@@ -58,7 +58,7 @@ export default function Updateguide() {
                 </div>
               </div>
             </div>
-          ))
+          )) : <div className="container" style={{backgroundColor : "rgba(0, 0, 77, 0.9"}}><h1 style={{padding : "20px", color :"white"}}>No Places Available.</h1></div>
         )}
       </div>
     </div>

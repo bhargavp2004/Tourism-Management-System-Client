@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-
+import { PulseLoader as DotLoader } from "react-spinners";
 const styles = {
   selectContainer: {
     marginBottom: "20px",
@@ -31,24 +31,29 @@ export default function Updateplacedetails(props) {
     image: null,
   });
 
+  const [imageloading, setimageloading] = useState(true);
+  const [placeloading, setplaceloading] = useState(true);
+  const [deleting, setdeleting] = useState(false);
+
   const [imageSrc, setImageSrc] = useState(null);
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
         const response = await fetch(`http://localhost:5000/fetchImage/${id}`);
+        console.log("IMage : ");
+        console.log(response);
+        const data = await response.json();
         if (response.ok) {
-          // Get the image data from the response
-          const imageBlob = await response.blob();
-          const imageUrl = URL.createObjectURL(imageBlob);
-
-          // Set the image source URL
-          setImageSrc(imageUrl);
+          setImageSrc(`data:${data.contentType};base64,${data.image}`);
         } else {
           console.error("Error fetching image:", response.statusText);
         }
       } catch (error) {
         console.error("Error fetching image:", error);
+      }
+      finally{
+        setimageloading(false);
       }
     };
 
@@ -69,6 +74,9 @@ export default function Updateplacedetails(props) {
       } catch (error) {
         console.error("Error fetching package:", error);
       }
+      finally{
+        setplaceloading(false);
+      }
     };
     fetchData();
   }, []);
@@ -81,6 +89,7 @@ export default function Updateplacedetails(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("hello");
+    console.log(places);
     try {
       const response = await fetch(`http://localhost:5000/updatePlace/${id}`, {
         method: "PUT",
@@ -91,8 +100,6 @@ export default function Updateplacedetails(props) {
       });
 
       if (response.ok) {
-        // Package updated successfully
-        // You can redirect to the package details page or show a success message
         navigate("/adminhome");
       } else {
         console.error("Error updating Plae:", response.statusText);
@@ -104,15 +111,24 @@ export default function Updateplacedetails(props) {
 
   const handleDelete = async () => {
     try {
+      setdeleting(true);
       const response = await fetch(`http://localhost:5000/deletePlace/${id}`, {
         method: "POST",
       });
-
-      navigate("/adminhome");
+      if(response.ok)
+      {
+        window.alert("Deletion Successful");
+        navigate("/adminhome");
+      }
+      else{
+        throw new Error("Error Deleting Place");
+      }
     } catch (error) {
       console.error("Error deleting place:", error);
-      // Display a generic error message for network or server errors
       alert("An error occurred while deleting the Palce.");
+    }
+    finally{
+      setdeleting(false);
     }
   };
 
@@ -126,26 +142,30 @@ export default function Updateplacedetails(props) {
               <label htmlFor="place_name" className="form-label">
                 place_name :
               </label>
-              <input
+              {placeloading ? ( <div className="text-center">
+                  <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                </div>) : <input
                 type="text"
                 id="place_name"
                 name="place_name"
                 value={places.place_name}
                 onChange={handleChange}
                 className="form-control"
-              />
+              />}
             </div>
             <div className="mb-3">
               <label htmlFor="place_desc" className="form-label">
                 place_desc :
               </label>
-              <textarea
+              {placeloading ? ( <div className="text-center">
+                  <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                </div>) : <textarea
                 id="place_desc"
                 name="place_desc"
                 value={places.place_desc}
                 onChange={handleChange}
                 className="form-control"
-              />
+              />}
             </div>
 
             <div className="mb-3">
@@ -162,7 +182,9 @@ export default function Updateplacedetails(props) {
                 className="form-control"
               />
               <div>
-                {imageSrc && (
+                {imageloading ? ( <div className="text-center">
+                  <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                </div>) : imageSrc && (
                   <img
                     src={imageSrc}
                     alt="Place Image"
@@ -180,7 +202,11 @@ export default function Updateplacedetails(props) {
               className="btn btn-danger"
               onClick={handleDelete}
             >
-              Delete Place
+              {deleting ? (
+                <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+              ) : (
+                "Delete Place"
+              )}
             </button>
           </form>
         </div>

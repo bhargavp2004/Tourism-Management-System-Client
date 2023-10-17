@@ -33,6 +33,9 @@ export default function Navbar(props) {
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-blue">
         <div className="container-fluid">
+        <NavLink className="navbar-brand" to="/Home">
+            TOURISM MANAGEMENT SYSTEM
+          </NavLink>
           <button
             className="navbar-toggler"
             type="button"

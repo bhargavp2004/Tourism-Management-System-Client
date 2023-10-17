@@ -38,7 +38,7 @@ export default function Updateguide() {
            <div className="text-center justify-content-center">
            <DotLoader color="rgb(0, 0, 77)" loading={true} size={50} />
          </div>
-          ) : 
+          ) : (guides.length > 0 ? (
           guides.map((guide) => (
           <GuideCard
             key={guide._id}
@@ -50,7 +50,7 @@ export default function Updateguide() {
             mobilenumber={guide.mobilenumber}
             add="/updateguidedetails" // Use the guide username from state
           />
-        ))}
+        ))) : <div className="container" style={{backgroundColor : "rgba(0, 0, 77, 0.9"}}><h1 style={{padding : "20px", color :"white"}}>No Guides Available.</h1></div>)}
       </div>
     </div>
   );

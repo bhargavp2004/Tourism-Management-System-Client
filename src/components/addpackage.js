@@ -144,7 +144,7 @@ export default function Signup() {
 
       await res.json();
       if (res.status === 400) {
-        window.alert("Package Successfully no added");
+        window.alert("Package Upload Failed");
         navigate("/addpack");
       } else {
         window.alert("Package Added Succesfully");
@@ -267,25 +267,23 @@ export default function Signup() {
               <i className="fa fa-lock fa-lg me-3 fa-fw"></i>
               <div className="form-outline flex-fill mb-0">
                 <div className="border rounded p-3">
-                  {" "}
-                  {/* Add border and padding */}
                   {placesloading ?
                     (<div className="text-center">
                       <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
                     </div>) : places.map((place) => (
-                      <div key={place._id} className="form-check">
+                      <div key={place.place_id} className="form-check">
                         <input
                           type="checkbox"
-                          id={`place_${place._id}`}
+                          id={`place_${place.place_id}`}
                           className="form-check-input"
                           name="package_place"
-                          value={place._id}
-                          checked={packages.package_place.includes(place._id)}
+                          value={place.place_id}
+                          checked={packages.package_place.includes(place.place_id)}
                           onChange={handleInputs}
                         />
                         <label
                           className="form-check-label"
-                          htmlFor={`place_${place._id}`}
+                          htmlFor={`place_${place.place_id}`}
                         >
                           {place.place_name}
                         </label>

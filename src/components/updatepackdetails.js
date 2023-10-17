@@ -30,6 +30,7 @@ export default function Updatepackdetails(props) {
   const [guides, setGuides] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingguide, setLoadingguide] = useState(true);
+  const [deleting, setdeleting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -155,25 +156,28 @@ export default function Updatepackdetails(props) {
   };
 
   const handleDelete = async () => {
+
     try {
+      setdeleting(true);
       const response = await fetch(`http://localhost:5000/deletePackage/${id}`, {
         method: "POST",
       });
 
       if (response.ok) {
-        // Package deleted successfully
-        // You can redirect to a success page or show a success message
-        console.log("yes dele");
+        window.alert("Package deleted successfully");
         navigate("/adminhome");
       } else {
         const responseData = await response.json();
-        // Display the error message from the server
+       
         alert(responseData.message);
       }
     } catch (error) {
       console.error("Error deleting package:", error);
       // Display a generic error message for network or server errors
       alert("An error occurred while deleting the package.");
+    }
+    finally{
+      setdeleting(false);
     }
   };
 
@@ -237,11 +241,11 @@ export default function Updatepackdetails(props) {
 
             <div className="mb-3">
               <label className="form-label">Package Places:</label>
-              {loading ? ( // Show loading spinner while loading is true
+              {loading ? ( 
                 <div className="text-center">
                   <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
                 </div>
-              ) : (places.map((place) => (
+              ) : (places.length > 0 ? places.map((place) => (
                 <div key={place._id} className="form-check">
                   <input
                     type="checkbox"
@@ -259,7 +263,7 @@ export default function Updatepackdetails(props) {
                     {place.place_name}
                   </label>
                 </div>
-              )))}
+              )) : <div className="container" style={{backgroundColor : "rgba(0, 0, 77, 0.9"}}><h1 style={{padding : "20px", color :"white"}}>No Places Available.</h1></div>)}
             </div>
 
             <div className="mb-3">
@@ -290,7 +294,9 @@ export default function Updatepackdetails(props) {
               Update Package
             </button>
             <button type="button" className="btn btn-danger" onClick={handleDelete}>
-              Delete Package
+              {deleting ?  <div className="text-center">
+                  <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                </div> : ("Delete Package")}
             </button>
           </form>
         </div>
