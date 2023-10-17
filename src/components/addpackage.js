@@ -155,13 +155,13 @@ export default function Signup() {
 
   return (
     <>
-      <div className="d-flex justify-content-center" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundAttachment: "fixed", backgroundSize: 'cover', zIndex: -1, position: "sticky" }}>
+      <div className="d-flex justify-content-center" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundAttachment: "fixed", backgroundSize: 'cover', position: "sticky" }}>
         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style={{ backgroundColor: 'white' }}>
           <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
             Add Package
           </p>
 
-          <form method="post" className="mx-1 mx-md-4" style={{ zIndex: 1 }}>
+          <form method="post" className="mx-1 mx-md-4">
             <div className="d-flex flex-row align-items-center mb-4">
               <i className="fa fa-user fa-lg me-3 fa-fw"></i>
               <div className="form-outline flex-fill mb-0">
