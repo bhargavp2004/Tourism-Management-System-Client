@@ -212,9 +212,7 @@ function TravellersDetails() {
     const amount_to_pay = bookingData.book_cost * 100;
     console.log(amount_to_pay);
     await fetchData();
-    
-
-   
+  
     const options = {
       key: process.env.REACT_APP_API_KEY,
       amount: amount_to_pay,

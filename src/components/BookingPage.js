@@ -131,9 +131,9 @@ export default function BookingPage() {
         const response = await fetch(`http://localhost:5000/getDates/${id}`);
         if (response.ok) {
           const data = await response.json();
-        const currentDate = new Date();
-        const filteredDates = data.filter((date) => new Date(date.end_date) > currentDate  && date.rem_book > 0);
-        setDates(filteredDates);
+          const currentDate = new Date();
+          const filteredDates = data.filter((date) => new Date(date.end_date) > currentDate && date.rem_book > 0);
+          setDates(filteredDates);
         } else {
           console.error("Error fetching dates:", response.statusText);
         }
@@ -150,7 +150,12 @@ export default function BookingPage() {
   const [selectedDate, setSelectedDate] = useState({});
 
   function handleBook() {
-    navigate(`/bookPackage/${id}`, { state: { selectedDate } });
+    if (!isLoggedIn) {
+      navigate('/signin');
+    }
+    else {
+      navigate(`/bookPackage/${id}`, { state: { selectedDate } });
+    }
   }
 
   function handleDateSelection(date) {

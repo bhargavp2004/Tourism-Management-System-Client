@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tourismImage from '../images/pic3.jpg';
+import { PulseLoader as DotLoader } from 'react-spinners';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ export default function Signup() {
   });
 
   let name, value;
+  const [postingdata, setpostingdata] = useState(false);
 
   const handleInputs = (e) => {
     name = e.target.name;
@@ -19,18 +21,18 @@ export default function Signup() {
 
   const PostData = async (e) => {
     e.preventDefault();
-    console.log("Post Data called")
+    setpostingdata(true);
 
     const { firstname, lastname, email, username, password, repeatPassword, mobilenumber } = guide;
     console.log(firstname);
 
     if (!email || !username || !password || !repeatPassword || !firstname || !lastname || !mobilenumber) {
-      console.log("fill all the fields properly");
+      setpostingdata(false);
       window.alert('Fill all the fields properly')
       navigate('/addguide');
     }
     else if (password !== repeatPassword) {
-
+      setpostingdata(false);
       window.alert('Password and Repeat password field must match');
       navigate('/addguide');
 
@@ -46,10 +48,12 @@ export default function Signup() {
 
       await res.json();
       if (res.status === 500) {
+        setpostingdata(false);
         window.alert("Guide not added");
         navigate('/addguide');
       }
       else {
+        setpostingdata(false);
         window.alert("Guide Added Successful");
         navigate('/adminhome');
       }
@@ -60,7 +64,7 @@ export default function Signup() {
   return (
     <>
 
-      <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundSize: 'cover', backgroundAttachment:"fixed", position : "sticky" }}>
+      <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${tourismImage})`, backgroundPosition: "center", backgroundSize: 'cover', backgroundAttachment: "fixed", position: "sticky" }}>
         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" style={{ backgroundColor: 'white' }}>
           <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"> Add Guide</p>
 
@@ -122,10 +126,13 @@ export default function Signup() {
               </div>
             </div>
 
-            <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-              <button type="button" className="btn btn-primary btn-lg" onClick={PostData}>Add guide</button>
-            </div>
-
+            {postingdata ? (<div className="text-center">
+                   <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                 </div>) : (
+              <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                <button type="button" className="btn btn-primary btn-lg" onClick={PostData}>Add guide</button>
+              </div>
+            )}
           </form>
 
         </div>
