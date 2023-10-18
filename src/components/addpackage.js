@@ -7,7 +7,7 @@ export default function Signup() {
   const [places, setPlaces] = useState([]);
   const [placesloading, setplacesloading] = useState(true);
   const [guidesloading, setguidesloading] = useState(true);
-
+  const [postingdata, setpostingdata] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,7 +91,7 @@ export default function Signup() {
 
   const PostData = async (e) => {
     e.preventDefault();
-    console.log("Post Data called");
+    setpostingdata(true);
 
     const {
       package_name,
@@ -122,7 +122,7 @@ export default function Signup() {
       !package_capacity ||
       !start_date || !end_date
     ) {
-      console.log("fill all the fields properly");
+      setpostingdata(false);
       window.alert("Fill all the fields properly");
       navigate("/addpack");
     } else {
@@ -144,9 +144,11 @@ export default function Signup() {
 
       await res.json();
       if (res.status === 400) {
+        setpostingdata(false);
         window.alert("Package Upload Failed");
         navigate("/addpack");
       } else {
+        setpostingdata(false);
         window.alert("Package Added Succesfully");
         navigate("/adminhome");
       }
@@ -365,7 +367,9 @@ export default function Signup() {
               </div>
             </div>
 
-            <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+            {postingdata ? (<div className="text-center">
+                   <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                 </div>) : (<div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
@@ -373,7 +377,7 @@ export default function Signup() {
               >
                 Add Package
               </button>
-            </div>
+            </div>)}
           </form>
         </div>
       </div>
