@@ -64,7 +64,7 @@ export default function Updatepackage() {
         ) : (packages.length > 0 ? packages.map((pack) => (
           <div className="col" key={pack._id}>
             <div className="card mb-4">
-              <img src={tourismImage} className="card-img-top" alt="Package" />
+              <img src={pack.img_url} className="card-img-top" alt="Package" />
               <div className="card-body">
                 <h5 className="card-title">{pack.package_name}</h5>
                 <p className="card-text">Duration: {pack.package_days} days</p>

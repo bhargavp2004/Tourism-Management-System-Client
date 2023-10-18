@@ -63,7 +63,8 @@ export default function Signup() {
     package_place: [],
     package_guide: "",
     start_date: "",
-    end_date: ""
+    end_date: "",
+    img_url: "",
   });
 
   let name, value;
@@ -102,7 +103,8 @@ export default function Signup() {
       package_place,
       package_guide,
       start_date,
-      end_date
+      end_date,
+      img_url
     } = packages;
 
     console.log(package_name);
@@ -138,7 +140,8 @@ export default function Signup() {
           package_place,
           package_guide,
           start_date,
-          end_date
+          end_date,
+          img_url
         }),
       });
 
@@ -261,6 +264,26 @@ export default function Signup() {
                   htmlFor="package_capacity"
                 >
                   Capacity
+                </label>
+              </div>
+            </div>
+
+            <div className="d-flex flex-row align-items-center mb-4">
+              <i className="fa fa-lock fa-lg me-3 fa-fw"></i>
+              <div className="form-outline flex-fill mb-0">
+                <input
+                  type="Text"
+                  id="img_url"
+                  className="form-control"
+                  name="img_url"
+                  value={packages.img_url}
+                  onChange={handleInputs}
+                />
+                <label
+                  className="form-label"
+                  htmlFor="package_capacity"
+                >
+                  Image Url
                 </label>
               </div>
             </div>
