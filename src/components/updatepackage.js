@@ -68,7 +68,7 @@ export default function Updatepackage() {
               <div className="card-body">
                 <h5 className="card-title">{pack.package_name}</h5>
                 <p className="card-text">Duration: {pack.package_days} days</p>
-                <p className="card-text">Price: ${pack.package_price}</p>
+                <p className="card-text">Price: Rs.{pack.package_price}</p>
                 {guideLoading ? (
                    <div className="text-center">
                    <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />

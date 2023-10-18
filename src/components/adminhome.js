@@ -1,7 +1,8 @@
 import React from 'react';
 import MyCard from './Card';
 import img1 from '../images/package.jpg';
-
+import img2 from '../images/guide1.jpg'
+import img3 from '../images/place.jpg'
 function App() {
   return (
     <div className="container my-5">
@@ -17,7 +18,7 @@ function App() {
         </div>
         <div className="col-md-3 mb-4">
           <MyCard
-            img={img1}
+            img={img2}
             title="Guide"
             desc="Add Guide"
             add="/addguide"
@@ -26,22 +27,14 @@ function App() {
         </div>
         <div className="col-md-3 mb-4">
           <MyCard
-            img={img1}
+            img={img3}
             title="Place"
             desc="Add Some Places"
             add="/addplace"
             update="/updateplace"
           />
         </div>
-        <div className="col-md-3 mb-4">
-          <MyCard
-            img={img1}
-            title="Add Dates"
-            desc="Add Dates to Package"
-            add="/adddate"
-            update="/updatedate"
-          />
-        </div>
+        
       </div>
     </div>
   );
