@@ -144,7 +144,7 @@ function TravellersDetails() {
     package_overview: "",
     package_days: "",
     package_price: "",
-    package_place: [], // Initialize as an empty array
+    package_place: [],
     package_guide: "",
   });
 
@@ -188,7 +188,7 @@ function TravellersDetails() {
     }
   }
 
-    var packageName;
+    var packageName, packImage;
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:5000/getpackagebypackdate/${bookingData.book_pack}`);
@@ -196,6 +196,7 @@ function TravellersDetails() {
           const data = await response.json();
           console.log(data);
           packageName = data.package_name
+          packImage = data.img_url;
         } else {
           console.error("Error fetching packages:", response.statusText);
         }
@@ -205,7 +206,7 @@ function TravellersDetails() {
     };
 
 
-  const initPayment = async (data, bookingData) => {
+  const initPayment = async (data, bookingData, successCallback) => {
     console.log("Inside initPayment function");
     console.log(process.env.REACT_APP_API_KEY);
     console.log(data.id);
@@ -219,7 +220,7 @@ function TravellersDetails() {
       currency: data.currency,
       name: `Package : ${packageName}`,
       description: "Testing",
-      image: tourImage,
+      image: packImage,
       order_id: data.id,
       handler: async (response) => {
         try {
@@ -244,6 +245,7 @@ function TravellersDetails() {
           console.log(responseData.message);
 
           if (apiResponse.status === 200) {
+            successCallback();
             window.alert("Your Bookings Are Confirmed");
             navigate('/Home');
           } else {
@@ -263,11 +265,12 @@ function TravellersDetails() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    var mem = parseInt(bookingData.book_adult,10);
-    mem = mem + parseInt(bookingData.book_child,10);
-    packageData.rem_book = (packageData.rem_book - mem);
-    console.log(packageData);
-    updatepack(packageData);
+    const successCallback = () => {
+      var mem = parseInt(bookingData.book_adult,10);
+      mem = mem + parseInt(bookingData.book_child,10);
+      packageData.rem_book = (packageData.rem_book - mem);
+      updatepack(packageData);
+    };
     
     if (!agreedToTerms) {
       alert("Please agree to the terms before booking.");
@@ -289,7 +292,7 @@ function TravellersDetails() {
         const resData = await response.json();
         console.log('Booking created:', resData.savedBooking);
         console.log("Order details:", resData.data);
-        initPayment(resData.data, resData.savedBooking);
+        initPayment(resData.data, resData.savedBooking, successCallback);
       } else {
         console.error('Error creating booking');
       }

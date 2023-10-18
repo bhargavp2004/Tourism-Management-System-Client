@@ -18,7 +18,6 @@ const styles = {
     backgroundColor: "#fff",
     transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
   },
-  // Add more styles here
 };
 
 export default function Updatepackdetails(props) {
@@ -74,8 +73,8 @@ export default function Updatepackdetails(props) {
     package_overview: "",
     package_days: "",
     package_price: "",
-    package_place: [], // Initialize as an empty array
-    package_guide: "", // Initialize as an empty array
+    package_place: [],
+    package_guide: "",
   });
 
   useEffect(() => {
@@ -104,13 +103,11 @@ export default function Updatepackdetails(props) {
   const handlePlaceCheckboxChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
-      // If the checkbox is checked, add the place ID to the array
       setPackage({
         ...packages,
         package_place: [...packages.package_place, value],
       });
     } else {
-      // If the checkbox is unchecked, remove the place ID from the array
       setPackage({
         ...packages,
         package_place: packages.package_place.filter(
@@ -144,8 +141,6 @@ export default function Updatepackdetails(props) {
       );
 
       if (response.ok) {
-        // Package updated successfully
-        // You can redirect to the package details page or show a success message
         navigate("/adminhome");
       } else {
         console.error("Error updating package:", response.statusText);
@@ -173,7 +168,6 @@ export default function Updatepackdetails(props) {
       }
     } catch (error) {
       console.error("Error deleting package:", error);
-      // Display a generic error message for network or server errors
       alert("An error occurred while deleting the package.");
     }
     finally{

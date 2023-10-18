@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PackageCard from "./packageCard";
-import tourismImage from '../images/pic3.jpg';
 import { NavLink } from "react-router-dom";
 import {PulseLoader as DotLoader} from "react-spinners";
 
 export default function Updatepackage() {
-  const navigate = useNavigate();
   const [packages, setPackages] = useState([]);
   const [packageLoading, setpackageLoading] = useState(true);
   const [guideUsernames, setGuideUsernames] = useState({}); 
@@ -29,9 +25,7 @@ export default function Updatepackage() {
       }
     };
 
-    fetchData(); // Call the async function
-
-    // Fetch guide usernames when the component mounts
+    fetchData();
     fetchGuideUsernames();
   }, []);
 
@@ -40,7 +34,6 @@ export default function Updatepackage() {
       const response = await fetch("http://localhost:5000/guideUsernames");
       if (response.ok) {
         const data = await response.json();
-        // Store guide usernames in state
         setGuideUsernames(data);
       } else {
         console.error("Error fetching guide usernames:", response.statusText);

@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import PackageCard from "./packageCard";
-import tourismImage from '../images/pic3.jpg';
-
+import tourismImage from '../images/backgroundImg.jpg';
 import '../styles/demoHome.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 function Home() {
-  const navigate = useNavigate();
   const [packages, setPackages] = useState([]);
-  const [guideUsernames, setGuideUsernames] = useState({}); // Store guide usernames
+  const [guideUsernames, setGuideUsernames] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -28,9 +23,7 @@ function Home() {
       }
     };
 
-    fetchData(); // Call the async function
-
-    // Fetch guide usernames when the component mounts
+    fetchData();
     fetchGuideUsernames();
   }, []);
 
@@ -39,7 +32,6 @@ function Home() {
       const response = await fetch("http://localhost:5000/guideUsernames");
       if (response.ok) {
         const data = await response.json();
-        // Store guide usernames in state
         setGuideUsernames(data);
       } else {
         console.error("Error fetching guide usernames:", response.statusText);

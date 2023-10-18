@@ -12,17 +12,14 @@ function About() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Include the token in the Authorization header as a Bearer token
           'Authorization': `Bearer ${token}`
         },
-        // If you need to send additional data in the request body, include it here
         body: JSON.stringify({
           token
         })
       });
       if (response.ok) {
         const data = await response.json();
-        // Process the data received from the backend
         console.log(data);
       } else {
         console.error('Error:', response.statusText);

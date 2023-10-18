@@ -4,8 +4,8 @@
     font-size: 16px;
     border: none;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-    color: #333; /* Dark text color for better visibility */
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333; 
     margin-bottom: 20px;
   }
 

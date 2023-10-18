@@ -1,20 +1,16 @@
 input[type="text"]:focus {
-    border-color: #007bff; /* Change the border color when focused */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle box shadow */
+    border-color: #007bff; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
   }
 
-/* Hide the hover text by default */
-/* Default button style */
  #bookit .btn.btn-primary.btn-lg::before {
-    content: attr(data-content); /* Use the 'data-content' attribute as content */
+    content: attr(data-content); 
   }
   
-  /* Change the button content on hover */
   #bookit .btn.btn-primary.btn-lg:hover::before {
-    content: "Book"; /* Change the content to "Book" when hovered */
+    content: "Book"; 
   }
-  
-  /* Hide the 'data-content' attribute from view */
+
   #bookit .btn.btn-primary.btn-lg::after {
     content: none;
   }

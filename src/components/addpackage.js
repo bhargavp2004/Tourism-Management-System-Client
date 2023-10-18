@@ -27,7 +27,7 @@ export default function Signup() {
       }
     };
 
-    fetchData(); // Call the async function
+    fetchData();
   }, []);
 
   const [guides, setGuides] = useState([]);
@@ -50,7 +50,7 @@ export default function Signup() {
       }
     };
 
-    fetchData(); // Call the async function
+    fetchData();
   }, []);
 
   const navigate = useNavigate();
@@ -325,9 +325,9 @@ export default function Signup() {
                 <div className="border rounded p-3">
                   {" "}
                   {guidesloading ? (
-                     <div className="text-center">
-                     <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
-                   </div>
+                    <div className="text-center">
+                      <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+                    </div>
                   ) : guides.map((guide) => (
                     <div key={guide._id} className="form-check">
                       <input
@@ -338,7 +338,7 @@ export default function Signup() {
                         value={guide._id}
                         checked={packages.package_guide.includes(
                           guide._id
-                        )} // Check if the place is included in selected places
+                        )}
                         onChange={handleInputs}
                       />
                       <label
@@ -391,8 +391,8 @@ export default function Signup() {
             </div>
 
             {postingdata ? (<div className="text-center">
-                   <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
-                 </div>) : (<div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+              <DotLoader color="rgb(0, 0, 77)" loading={true} size={10} />
+            </div>) : (<div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
               <button
                 type="button"
                 className="btn btn-primary btn-lg"

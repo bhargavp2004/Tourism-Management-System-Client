@@ -24,9 +24,7 @@ export default function Updateguide() {
       }
     };
 
-    fetchData(); // Call the async function
-
-    // Fetch guide usernames when the component mounts
+    fetchData();
   }, []);
 
  
@@ -48,7 +46,7 @@ export default function Updateguide() {
             email={guide.email}
             username={guide.username}
             mobilenumber={guide.mobilenumber}
-            add="/updateguidedetails" // Use the guide username from state
+            add="/updateguidedetails"
           />
         ))) : <div className="container" style={{backgroundColor : "rgba(0, 0, 77, 0.9"}}><h1 style={{padding : "20px", color :"white"}}>No Guides Available.</h1></div>)}
       </div>

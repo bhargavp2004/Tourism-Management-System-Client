@@ -1,27 +1,25 @@
-/* Home.css */
-
 body {
-    background-image: url('../images/loginBackground.jpg'); /* Specify the path to your background image */
+    background-image: url('../images/backgroundImg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh; /* Ensures the background covers the entire viewport */
+    height: 100vh;
     margin: 0;
     padding: 0;
     background-attachment: fixed;
   }
   
   .container-xxl {
-    background-color: rgba(255, 255, 255, 0.0); /* Set a semi-transparent white background for your content */
-    padding: 25px; /* Adjust the padding as needed */
-    border-radius: 10px; /* Optional: Add rounded corners to your content container */ /* Set width to 100% to expand horizontally */
+    background-color: rgba(255, 255, 255, 0.0);
+    padding: 25px;
+    border-radius: 10px;
     text-align: center;
   }
   
 
   .row-cols-md-4 > .col {
-    margin-bottom: 20px; /* Add spacing between packages */
+    margin-bottom: 20px;
   }
   .row-cols-md-4 > .col:last-child {
-    margin-right: 0; /* Remove horizontal spacing for the last package in the row */
+    margin-right: 0;
   }

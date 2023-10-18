@@ -11,24 +11,20 @@ export default function Navbar(props) {
     useContext(GlobalContext);
 
     useEffect(() => {
-      // Manually initialize Bootstrap's collapse functionality
       const toggler = document.querySelector(".navbar-toggler");
       const target = document.querySelector("#navbarSupportedContent");
   
       toggler.addEventListener("click", () => {
         target.classList.toggle("show");
       });
-  
-      // Clean up event listener when component unmounts
+
       return () => {
         toggler.removeEventListener("click", () => {
           target.classList.toggle("show");
         });
       };
-    }, []); // Empty dependency array ensures effect runs once after initial render
+    }, []); 
 
-    
-    
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-blue">
@@ -82,7 +78,6 @@ export default function Navbar(props) {
                 </li>
               )}
 
-              {/* Conditional rendering for admin */}
               {isAdmin && (
                 <>
                   <li className="nav-item">
@@ -124,7 +119,6 @@ export default function Navbar(props) {
               )}
 
               {isLoggedIn && <LogoutButton loginfo={setisLoggedIn} />}
-              {/* End of Conditional rendering for admin */}
             </ul>
           </div>
         </div>

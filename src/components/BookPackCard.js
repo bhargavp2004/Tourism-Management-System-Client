@@ -7,8 +7,6 @@ import Button from "react-bootstrap/Button";
 
 const BookPackCard = (props) => {
   const handleButtonClick = async () => {
-    // Handle the button click action here
-    // You can use package_name or other package details to perform an action
     console.log(`Clicked on ${props.package_name}`);
 
     try{
