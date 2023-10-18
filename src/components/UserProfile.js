@@ -46,7 +46,6 @@ export default function UserProfile() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setbookhist(data);
       })
       .catch((error) => {
