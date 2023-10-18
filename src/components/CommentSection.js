@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
+import { GlobalContext } from "../App";
+
+
 import { PulseLoader as DotLoader } from 'react-spinners';
 function CommentSection(props) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [userid, setUserid] = useState('');
   const [commentloading, setcommentloading] = useState(true);
-
+  const { isLoggedIn, isAdmin } = useContext(GlobalContext);
   const packid = props.packid;
 
   useEffect(() => {
@@ -103,6 +106,7 @@ function CommentSection(props) {
           ))}
       </div>
       }
+      {!isAdmin && (
       <div className="mb-3">
         <textarea
           className="form-control"
@@ -111,9 +115,13 @@ function CommentSection(props) {
           onChange={handleCommentChange}
         />
       </div>
+      )}
+
+      {!isAdmin && (
       <button className="btn btn-primary" onClick={handleSubmitComment}>
         Add Comment
       </button>
+      )}
     </div>
   );
 }

@@ -185,7 +185,12 @@ export default function BookingPage() {
               ))}
             </ul>
           }
+          { !isAdmin && (
           <h2 className="mt-4 text-primary">Select Date</h2>
+          )} 
+          { isAdmin && (
+          <h2 className="mt-4 text-primary">Dates available for this Package</h2>
+          )}  
           <form>
             {dateloading ? (<div className="text-center justify-content-center">
               <DotLoader color="rgb(0, 0, 77)" loading={true} size={50} />
