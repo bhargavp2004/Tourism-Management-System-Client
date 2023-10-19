@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import tourismImage from '../images/pic3.jpg';
 import { PulseLoader as DotLoader } from 'react-spinners';
 
-export default function Signup() {
+export default function AddGuide() {
   const navigate = useNavigate();
   const [guide, setGuide] = useState({
     firstname: "", lastname: "", email: "", username: "", password: "", repeatPassword: "", mobilenumber: ""

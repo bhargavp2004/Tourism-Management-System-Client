@@ -4,6 +4,7 @@ import { GlobalContext } from "../App";
 
 
 import { PulseLoader as DotLoader } from 'react-spinners';
+
 function CommentSection(props) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import tourismImage from "../images/pic5.jpg";
 import { PulseLoader as DotLoader } from "react-spinners";
 
-export default function Signup() {
+export default function AddPackage() {
   const [places, setPlaces] = useState([]);
   const [placesloading, setplacesloading] = useState(true);
   const [guidesloading, setguidesloading] = useState(true);

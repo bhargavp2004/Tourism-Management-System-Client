@@ -7,8 +7,6 @@ import tourImage from '../images/pic2.jpg';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import env from "react-dotenv";
-// const Razorpay = require('razorpay');
-// var instance = new Razorpay({ key_id: process.env.API_KEY, key_secret: process.env.API_SECRET_KEY });
 
 const StyledCard = styled.div`
   width: 80%;
@@ -20,23 +18,19 @@ const StyledCard = styled.div`
   background-color: #fff;
 `;
 
-// Create a styled component for the form title
 const StyledFormTitle = styled.h2`
   font-size: 24px;
   margin-bottom: 20px;
 `;
 
-// Create a styled component for the form elements
 const StyledFormGroup = styled.div`
   margin-bottom: 15px;
 `;
 
-// Create a styled component for the checkbox label
 const StyledFormCheckLabel = styled.label`
   font-weight: 400;
 `;
 
-// Create a styled component for the submit button
 const StyledSubmitButton = styled.button`
   background-color: #007bff;
   border-color: #007bff;
@@ -88,8 +82,6 @@ function TravellersDetails() {
     const generateInputs = () => {
       const allAdultTravelers = [];
       const allChildTravelers = [];
-
-      // Generate inputs for adults
       for (let i = 0; i < bookingData.book_adult; i++) {
         allAdultTravelers.push({
           type: "adult",
@@ -99,7 +91,6 @@ function TravellersDetails() {
         });
       }
 
-      // Generate inputs for children
       for (let i = 0; i < bookingData.book_child; i++) {
         allChildTravelers.push({
           type: "child",

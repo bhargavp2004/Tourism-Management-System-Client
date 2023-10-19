@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tourismImage from "../images/pic4.jpg";
 import { PulseLoader as DotLoader } from "react-spinners";
+
 export default function AddPlace() {
   const navigate = useNavigate();
   const [uploading, setuploading] = useState(false);

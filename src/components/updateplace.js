@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PlaceCard from "./placeCard";
 import {PulseLoader as DotLoader} from "react-spinners";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import '../styles/UpdatePlace.css';
  
-export default function Updateguide() {
+export default function UpdatePlace() {
 
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);

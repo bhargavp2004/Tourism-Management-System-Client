@@ -3,6 +3,7 @@ import MyCard from './Card';
 import img1 from '../images/package.jpg';
 import img2 from '../images/guide1.jpg'
 import img3 from '../images/place.jpg'
+
 function App() {
   return (
     <div className="container my-5">
