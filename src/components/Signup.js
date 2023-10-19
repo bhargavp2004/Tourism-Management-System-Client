@@ -58,7 +58,7 @@ export default function Signup() {
       console.log("fill all the fields properly");
       window.alert("Fill all the fields properly");
 
-      navigate("/signup");
+      navigate("/");
     } else {
       if (password !== repeatPassword) {
         setregistering(false);
