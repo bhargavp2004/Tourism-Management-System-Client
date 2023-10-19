@@ -74,6 +74,8 @@ export default function Updatepackdetails(props) {
     package_overview: "",
     package_days: "",
     package_price: "",
+    package_capacity: "",
+    img_url: "",
     package_place: [], // Initialize as an empty array
     package_guide: "", // Initialize as an empty array
   });
@@ -234,6 +236,34 @@ export default function Updatepackdetails(props) {
                 id="package_price"
                 name="package_price"
                 value={packages.package_price}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="package_capacity" className="form-label">
+                Package Capacity:
+              </label>
+              <input
+                type="text"
+                id="package_capacity"
+                name="package_capacity"
+                value={packages.package_capacity}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="img_url" className="form-label">
+                Package Img:
+              </label>
+              <input
+                type="text"
+                id="img_url"
+                name="img_url"
+                value={packages.img_url}
                 onChange={handleChange}
                 className="form-control"
               />
