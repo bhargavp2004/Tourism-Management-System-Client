@@ -73,15 +73,10 @@ export default function Updatepackdetails(props) {
     package_overview: "",
     package_days: "",
     package_price: "",
-<<<<<<< HEAD
     package_capacity: "",
     img_url: "",
     package_place: [], // Initialize as an empty array
     package_guide: "", // Initialize as an empty array
-=======
-    package_place: [],
-    package_guide: "",
->>>>>>> 88e565ccd25dc8d215d5bea1bba9c638f244ba3c
   });
 
   useEffect(() => {
