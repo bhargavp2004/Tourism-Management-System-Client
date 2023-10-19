@@ -13,7 +13,7 @@
 
   .navbar-dark .navbar-nav .nav-link {
     position: relative;
-    transition: color 0.3s ease; /* Optional: add color transition for smoother effect */
+    transition: color 0.3s ease;
 }
 
 .navbar-dark .navbar-nav .nav-link::before {
@@ -23,12 +23,12 @@
     left: 0;
     width: 0;
     height: 3px;
-    background-color: white; /* Color of the bottom bar */
-    transition: width 0.3s ease; /* Transition the width property */
+    background-color: white; 
+    transition: width 0.3s ease;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover::before {
-    width: 100%; /* Expand the bottom bar to 100% on hover */
+    width: 100%;
 }
 
 

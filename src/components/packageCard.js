@@ -7,7 +7,6 @@ import '../styles/Card.css';
 const PackageCard = (props) => {
   return (
     <Container className="mb-4 my-4">
-      {/* <Col className="d-flex justify-content-center"> */}
         <Card className="text-center custom-card">
           <Card.Body className="custom-card-body ">
             <Card.Title className="text-primary text-lg ">
@@ -31,7 +30,6 @@ const PackageCard = (props) => {
             </div>
           </Card.Body>
         </Card>
-      {/* </Col> */}
     </Container>
   );
 };

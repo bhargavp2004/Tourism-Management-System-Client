@@ -13,19 +13,13 @@ function CommentSection(props) {
   const packid = props.packid;
 
   useEffect(() => {
-    // Retrieve the token from local storage
     const token = localStorage.getItem('token');
-    // Check if a token exists
     if (token) {
       try {
-        // Decode the token to get the payload
         const decodedToken = jwtDecode(token);
-        // Extract the username from the payload (adjust this based on your token structure)
         const { id } = decodedToken.user;
-        // Set the username in the component's state
         setUserid(id);
       } catch (error) {
-        // Handle any decoding errors
         console.error('Error decoding token:', error);
       }
     }
@@ -40,7 +34,7 @@ function CommentSection(props) {
       .catch((error) => console.error('Error fetching comments:', error)).finally(() => {
         setcommentloading(false);
       });
-  }, [packid]); // Update comments when packid changes
+  }, [packid]);
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -61,23 +55,15 @@ function CommentSection(props) {
       }
   
       const data = await response.json();
-  
-      // Fetch the user associated with the new comment
-      const userResponse = await fetch(`http://localhost:5000/getUser/${userid}`); // Replace with the actual API endpoint for getting user details
+      const userResponse = await fetch(`http://localhost:5000/getUser/${userid}`);
   
       if (userResponse.ok) {
         const userData = await userResponse.json();
-  
-        // Construct the comment object with username
         const newCommentWithUsername = {
           username: userData.username,
-          comment_desc: data.comment_desc, // Assuming the response structure from the server
+          comment_desc: data.comment_desc, 
         };
-  
-        // Add the new comment to the comments state
         setComments([...comments, newCommentWithUsername]);
-  
-        // Clear the textarea
         setNewComment('');
       }
     } catch (error) {

@@ -17,7 +17,6 @@ const styles = {
     backgroundColor: "#fff",
     transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
   },
-  // Add more styles here
 };
 
 export default function Updateplacedetails(props) {

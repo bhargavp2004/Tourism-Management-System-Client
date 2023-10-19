@@ -17,7 +17,6 @@ const styles = {
     backgroundColor: "#fff",
     transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
   },
-  // Add more styles here
 };
 
 export default function Updateguidedetails(props) {
@@ -30,7 +29,7 @@ export default function Updateguidedetails(props) {
     lastname: "",
     email: "",
     username: "",
-    mobilenumber: "", // Initialize as an empty array
+    mobilenumber: "",
   });
 
   useEffect(() => {
@@ -74,8 +73,6 @@ export default function Updateguidedetails(props) {
       );
 
       if (response.ok) {
-        // Package updated successfully
-        // You can redirect to the package details page or show a success message
         navigate("/adminhome");
       } else {
         console.error("Error updating package:", response.statusText);
@@ -94,7 +91,6 @@ export default function Updateguidedetails(props) {
       navigate("/adminhome");
     } catch (error) {
       console.error("Error deleting Guide:", error);
-      // Display a generic error message for network or server errors
       alert("An error occurred while deleting the Guide.");
     }
   };

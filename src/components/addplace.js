@@ -124,7 +124,6 @@ export default function AddPlace() {
             <div className="d-flex flex-row align-items-center mb-4">
               <i className="fas fa-key fa-lg me-3 fa-fw"></i>
               <div className="form-outline flex-fill mb-0">
-                {/* Use type="file" for the image input */}
                 <input
                   type="file"
                   id="image"

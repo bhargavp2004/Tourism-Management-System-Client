@@ -1,6 +1,6 @@
 .card {
-    width: 80%; /* Adjust the width as needed */
-    margin: 0 auto; /* Center the card horizontally */
+    width: 80%;
+    margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -19,63 +19,42 @@ input[type="text"] {
   
 
   input[type="text"]:focus {
-    border-color: #007bff; /* Change the border color when focused */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle box shadow */
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
-
-/* Hide the hover text by default */
-/* Default button style */
   #bookbtn .btn.btn-primary.btn-lg::before {
-    content: attr(data-content); /* Use the 'data-content' attribute as content */
+    content: attr(data-content)
   }
   
-  /* Change the button content on hover */
+ 
   #bookbtn .btn.btn-primary.btn-lg:hover::before {
-    content: "Book"; /* Change the content to "Book" when hovered */
+    content: "Book";
   }
   
-  /* Hide the 'data-content' attribute from view */
   #bookbtn .btn.btn-primary.btn-lg::after {
     content: none;
   }
   
-  /* Add these styles to your existing CSS file or create a new one */
-
-/* Body styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
 }
 
-/* Card styles */
 .card {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Form styles */
 form {
   padding: 20px;
 }
 
-/* Form label styles */
 .form-label {
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-/* Input styles */
-/* .form-control {
-  width: 100%;
-  padding: 30px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-} */
-
-/* Button styles */
 .btn-primary {
   background-color: #007bff;
   color: #fff;
@@ -89,20 +68,15 @@ form {
   background-color: #0056b3;
 }
 
-/* Section styles */
 .vh-100 {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-/* Container styles */
 .container {
   max-width: 800px;
 }
-
-/* Heading styles */
 h1 {
   font-size: 24px;
   font-weight: bold;
@@ -110,11 +84,8 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Traveler form styles */
 .mb-4 {
   margin-bottom: 20px;
 }
-
-/* Add more styles as needed for other elements in your component */
 
   

@@ -116,7 +116,6 @@ export default function UserProfile() {
       );
 
       if (response.ok) {
-        // Remove the canceled booking from the state
         setCurrBook((prevCurrBook) =>
           prevCurrBook.filter((booking) => booking._id !== bookingId)
         );
@@ -296,7 +295,6 @@ export default function UserProfile() {
                           )}
                         </p>
                         <p>Cost: {booking.book_cost}</p>
-                        {/* Add a "Cancel" button and handle its click event */}
                         <button
                           onClick={() => handleCancelBooking(booking._id)}
                         >

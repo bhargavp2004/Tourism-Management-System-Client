@@ -1,9 +1,5 @@
-/* Signup.css */
-
-
-
-  .form-outline input:focus {
-    border-color: rgba(0, 0, 77, 0.9); /* Darker blue when focused */
+.form-outline input:focus {
+    border-color: rgba(0, 0, 77, 0.9); 
   }
   
   .btn {

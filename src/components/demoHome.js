@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import tourismImage from "../images/pic3.jpg";
+import tourismImage from "../images/backgroundImg.jpg";
 import "../styles/demoHome.css";
 import { PulseLoader as DotLoader } from "react-spinners";
+import { GlobalContext } from '../App';
 
 function Home() {
   const [packages, setPackages] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setloading] = useState(true);
+  const { isLoggedIn, setisLoggedIn, isAdmin, setisAdmin } = useContext(GlobalContext);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,8 +31,7 @@ function Home() {
       }
     };
 
-    fetchData(); // Call the async function
-
+    fetchData();
   }, []);
 
 
@@ -66,9 +69,11 @@ function Home() {
                     <h5 className="card-title">{pack.package_name}</h5>
                     <p className="card-text">Duration: {pack.package_days} days</p>
                     <p className="card-text">Price: Rs.{pack.package_price}</p>
-                    <NavLink to={`/bookingPage/${pack._id}`} className="btn btn-primary">
-                      Book Now
-                    </NavLink>
+                    {isAdmin ? (<NavLink to={`/bookingPage/${pack._id}`} className="btn btn-primary">
+                      Add Dates
+                    </NavLink>) : (<NavLink to={`/bookingPage/${pack._id}`} className="btn btn-primary">
+                      Book now
+                    </NavLink>)}
                   </div>
                 </div>
               </div>
